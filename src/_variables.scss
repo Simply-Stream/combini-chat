@@ -1,0 +1,20 @@
+$primary-background-color: #0e0e10;
+$chat-input-background-color: #fff3;
+
+// Color schemas (brand colors)
+$color-nights: #41145F;
+
+// Chat colors
+$primary-chat-color: #18181b;
+$chat-input-color: #efeff1;
+$highlighted-color: #ff00004d;
+$even-color: rgba($color-nights, .3);
+
+// Border
+$border-primary-color: rgba(255, 255, 255, 0.1);
+$border-primary-width: 1px;
+$border-primary-style: solid;
+$border-primary: $border-primary-color $border-primary-width $border-primary-style;
+
+$border-chat-input-color: rgba(255, 255, 255, 0.2);
+$border-chat: $border-chat-input-color $border-primary-width $border-primary-style;

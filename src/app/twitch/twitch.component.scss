@@ -1,0 +1,9 @@
+@import "../../variables";
+
+.chat-header {
+  background: $primary-chat-color;
+  border: $border-primary;
+
+  border-bottom: none;
+  border-top: none;
+}

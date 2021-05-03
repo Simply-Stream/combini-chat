@@ -1,0 +1,13 @@
+@import "../../../../variables";
+
+.chat-message-wrapper {
+  &.highlighted {
+    background: $highlighted-color !important;
+  }
+
+  &.even {
+    background-color: $even-color;
+  }
+
+  padding: .5rem 2rem;
+}

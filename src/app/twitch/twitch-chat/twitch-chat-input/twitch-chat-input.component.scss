@@ -1,0 +1,14 @@
+@import "../../../../variables";
+
+.chat-input {
+  &:focus {
+    background: #000;
+    border: #a970ff 2px solid;
+    outline: 0;
+  }
+
+  background: $chat-input-background-color;
+  color: $chat-input-color;
+
+  border: $border-chat;
+}
