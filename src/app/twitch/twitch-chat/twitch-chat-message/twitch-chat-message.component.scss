@@ -1,13 +1,18 @@
+@use "sass:color";
 @import "../../../../variables";
 
 .chat-message-wrapper {
   &.highlighted {
-    background: $highlighted-color !important;
+    background: $chat-color-highlight-self !important;
   }
 
-  &.even {
-    background-color: $even-color;
+  &.alternating {
+    background-color: $chat-color-alternating;
   }
 
-  padding: .5rem 2rem;
+  .chat-message-channel {
+    color: color.adjust($chat-color-primary, $lightness: 50%);
+  }
+
+  padding: .25rem var(--bs-gutter-x, 0.75rem);
 }

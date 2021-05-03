@@ -1,6 +1,24 @@
 @import "../../../variables";
 
+.chat-header {
+  background: $chat-color-primary;
+  border: $border-primary;
+
+  border-bottom: none;
+  border-top: none;
+
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+
+  text-transform: uppercase;
+}
+
 .chat-container {
-  background-color: $primary-chat-color;
+  background-color: $chat-color-primary;
   border: rgba(255, 255, 255, 0.1) 1px solid;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  padding-left: 0;
+  padding-right: 0;
 }

@@ -5,10 +5,10 @@ $chat-input-background-color: #fff3;
 $color-nights: #41145F;
 
 // Chat colors
-$primary-chat-color: #18181b;
-$chat-input-color: #efeff1;
-$highlighted-color: #ff00004d;
-$even-color: rgba($color-nights, .3);
+$chat-color-primary: #18181b;
+$chat-color-input: #efeff1;
+$chat-color-highlight-self: #ff00004d;
+$chat-color-alternating: rgba($color-nights, .3);
 
 // Border
 $border-primary-color: rgba(255, 255, 255, 0.1);

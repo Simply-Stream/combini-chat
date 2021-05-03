@@ -4,5 +4,5 @@ export interface Message {
   channel: string;
   userstate: ChatUserstate;
   message: string;
-  self: boolean;
+  background?: string
 }

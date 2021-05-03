@@ -2,7 +2,7 @@
   "name": "angular-electron",
   "version": "9.0.7",
   "description": "Angular 11 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "homepage": "https://github.com/simply-stream/combini-chat",
   "author": {
     "name": "Maxime GRIS",
     "email": "maxime.gris@gmail.com"
@@ -100,7 +100,7 @@
     "ts-node": "9.1.1",
     "tslib": "2.1.0",
     "typescript": "4.0.5",
-    "wait-on": "5.0.1",
+    "wait-on": "5.3.0",
     "webdriver-manager": "12.1.8",
     "zone.js": "0.10.3"
   },
