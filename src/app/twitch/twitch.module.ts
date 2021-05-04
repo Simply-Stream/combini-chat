@@ -6,13 +6,20 @@ import { TwitchChatComponent } from './twitch-chat/twitch-chat.component';
 import { TwitchChatMessageComponent } from './twitch-chat/twitch-chat-message/twitch-chat-message.component';
 import { TwitchChatInputComponent } from './twitch-chat/twitch-chat-input/twitch-chat-input.component';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { StoreModule } from '@ngrx/store';
+import * as fromTwitch from '../reducers';
+import * as fromTwitchChat from './twitch-chat/store/reducers/twitch-chat.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { TwitchChatEffects } from './twitch-chat/store/effects/twitch-chat.effects';
 
 @NgModule({
   declarations: [TwitchComponent, TwitchChatComponent, TwitchChatMessageComponent, TwitchChatInputComponent],
   imports: [
     CommonModule,
     TranslateModule,
+    StoreModule.forFeature(fromTwitch.twitchFeatureKey, fromTwitch.reducers, {metaReducers: fromTwitch.metaReducers}),
+    StoreModule.forFeature(fromTwitchChat.twitchChatFeatureKey, fromTwitchChat.reducer),
+    EffectsModule.forFeature([TwitchChatEffects]),
   ],
   exports: [
     TwitchComponent,

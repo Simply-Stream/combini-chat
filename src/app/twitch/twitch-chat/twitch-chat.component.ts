@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TwitchChatService } from '../../core/services/twitch/twitch-chat.service';
-import { ChatUserstate } from 'tmi.js';
 import { Message } from './twitch-chat-message/message';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+
+import * as fromTwitchChat from './store/reducers/twitch-chat.reducer';
+import { selectMessages } from './store/selectors/twitch-chat.selectors';
+import { connect } from './store/actions/twitch-chat.actions';
 
 @Component({
   selector: 'app-twitch-chat',
@@ -12,7 +16,7 @@ import { Message } from './twitch-chat-message/message';
       </div>
 
       <div class="chat-container flex-grow-1">
-        <ng-container *ngFor="let message of chatMessages; index as i">
+        <ng-container *ngFor="let message of allChat$ |async; index as i">
           <app-twitch-chat-message [message]="message"></app-twitch-chat-message>
         </ng-container>
       </div>
@@ -24,34 +28,13 @@ import { Message } from './twitch-chat-message/message';
   `,
   styleUrls: ['./twitch-chat.component.scss'],
 })
+// @TODO: Implement pipe to crawl through channels or implement selector for this
 export class TwitchChatComponent implements OnInit {
-  private readonly MAX_CHAT_MESSAGES = 200;
+  public allChat$: Observable<Message[] | []> = this.store.pipe(select(selectMessages));
 
-  public chatMessages: Message[] = [];
-  protected alternatingFlag = false;
-
-  constructor(private twitch: TwitchChatService) {
+  constructor(private store: Store<fromTwitchChat.State>) {
   }
 
   ngOnInit(): void {
-    this.twitch.connect(
-      [],
-      ((channel: string, userstate: ChatUserstate, message: string, self: boolean) => {
-        console.log({channel, userstate, message, self});
-
-        this.chatMessages.push({
-          channel,
-          userstate,
-          message,
-          background: (self ? 'self' : (this.alternatingFlag ? 'alternate' : null)),
-        });
-        this.alternatingFlag = !this.alternatingFlag;
-
-        // Just throw away the first message
-        if (this.chatMessages.length > this.MAX_CHAT_MESSAGES) {
-          this.chatMessages.shift();
-        }
-      }),
-    );
   }
 }

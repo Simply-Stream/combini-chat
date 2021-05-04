@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $primary-background-color: #0e0e10;
 $chat-input-background-color: #fff3;
 
@@ -8,7 +10,7 @@ $color-nights: #41145F;
 $chat-color-primary: #18181b;
 $chat-color-input: #efeff1;
 $chat-color-highlight-self: #ff00004d;
-$chat-color-alternating: rgba($color-nights, .3);
+$chat-color-alternating: color.adjust($color-nights, $alpha: -.7);
 
 // Border
 $border-primary-color: rgba(255, 255, 255, 0.1);

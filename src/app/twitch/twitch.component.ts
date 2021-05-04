@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-twitch',
@@ -9,10 +9,5 @@ import { Component, OnInit } from '@angular/core';
   `,
   styleUrls: ['./twitch.component.scss'],
 })
-export class TwitchComponent implements OnInit {
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
+export class TwitchComponent {
 }
