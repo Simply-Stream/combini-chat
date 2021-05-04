@@ -42,8 +42,6 @@ export const reducer = createReducer(
       combinedChannel: [...state.combinedChatChannels, channel],
     }),
   ),
-  // @TODO: This action is pretty ugly, needs to be revisited later ...
-  //        Should we add a message cap per channel?
   on(
     TwitchChatActions.addMessage,
     (state: State, {message}) =>
