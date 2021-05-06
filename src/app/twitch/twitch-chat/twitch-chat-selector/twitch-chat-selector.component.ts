@@ -18,8 +18,13 @@ import { Observable } from 'rxjs';
              href="#">{{ channel }}</a>
         </li>
 
-        <li class="nav-item"><a class="nav-link" href="#">+</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" (click)="onAdd($event)">+</a></li>
       </ul>
+
+      <app-twitch-chat-selector-add [visible]="modalVisible"
+                                    (addChannelSuccess)="onAddSuccess($event)"
+                                    (addChannelFailure)="onAddFailure($event)">
+      </app-twitch-chat-selector-add>
     </div>
   `,
   styleUrls: ['./twitch-chat-selector.component.scss'],
@@ -34,12 +39,28 @@ export class TwitchChatSelectorComponent {
   @Output()
   protected changeChannel: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output()
+  protected addChannel: EventEmitter<string> = new EventEmitter<string>();
+
+  modalVisible = false;
+
   onClick($event: MouseEvent, channel: string): void {
     $event.preventDefault();
     this.changeChannel.emit(channel);
   }
 
   onAdd($event: MouseEvent): void {
+    $event.preventDefault();
+    this.modalVisible = true;
+  }
 
+  onAddSuccess(channel: string): void {
+    this.addChannel.emit(channel);
+    this.modalVisible = false;
+  }
+
+  onAddFailure(reason: string): void {
+    this.modalVisible = false;
+    console.log(reason);
   }
 }

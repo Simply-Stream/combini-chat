@@ -1,0 +1,20 @@
+@import "../../../../../variables";
+
+.modal-content {
+  .channel-add-input {
+    &:focus {
+      background: #000;
+      border: #a970ff 2px solid;
+      outline: 0;
+    }
+
+    background: $chat-input-background-color;
+    color: $chat-color-input;
+
+    border: $border-chat;
+  }
+
+  background: $chat-color-primary;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 12px 32px 0px, rgba(0, 0, 0, 0.4) 0px 0px 8px 0px;
+  color: $chat-color-input;
+}

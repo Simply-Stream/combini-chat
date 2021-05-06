@@ -1,5 +1,13 @@
 {
   "CHAT": {
+    "CHANNEL": {
+      "ADD": {
+        "MODAL_TITLE": "Neuen Channel hinzufügen",
+        "ENTER": "Gib den Channelnamen ein",
+        "CANCEL": "Abbrechen",
+        "SAVE": "Speichern"
+      }
+    },
     "SEND_MESSAGE_TEXTAREA": "Eine Nachricht senden",
     "COMBINED": "Kombiniert"
   }

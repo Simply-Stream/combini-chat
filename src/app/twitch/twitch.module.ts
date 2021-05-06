@@ -13,14 +13,26 @@ import { EffectsModule } from '@ngrx/effects';
 import { TwitchChatEffects } from './twitch-chat/store/effects/twitch-chat.effects';
 import { RouterModule } from '@angular/router';
 import { TwitchChatSelectorComponent } from './twitch-chat/twitch-chat-selector/twitch-chat-selector.component';
+import { ChannelSelectPipe } from './twitch-chat/twitch-chat-selector/channel-select.pipe';
+import { TwitchChatSelectorAddComponent } from './twitch-chat/twitch-chat-selector/twitch-chat-selector-add/twitch-chat-selector-add.component';
+
+const components = [
+  TwitchComponent,
+  TwitchChatComponent,
+  TwitchChatMessageComponent,
+  TwitchChatInputComponent,
+  TwitchChatSelectorComponent,
+  TwitchChatSelectorAddComponent,
+];
+
+const pipes = [
+  ChannelSelectPipe,
+];
 
 @NgModule({
   declarations: [
-    TwitchComponent,
-    TwitchChatComponent,
-    TwitchChatMessageComponent,
-    TwitchChatInputComponent,
-    TwitchChatSelectorComponent,
+    ...components,
+    ...pipes,
   ],
   imports: [
     CommonModule,

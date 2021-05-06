@@ -1,5 +1,13 @@
 {
   "CHAT": {
+    "CHANNEL": {
+      "ADD": {
+        "MODAL_TITLE": "Add new channel",
+        "ENTER": "Enter channel name",
+        "CANCEL": "Cancel",
+        "SAVE": "Save"
+      }
+    },
     "SEND_MESSAGE_TEXTAREA": "Send a message",
     "COMBINED": "Combined"
   }
