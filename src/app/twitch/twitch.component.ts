@@ -3,9 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-twitch',
   template: `
-    <div class="twitch-container">
-      <app-twitch-chat></app-twitch-chat>
-    </div>
+    <router-outlet></router-outlet>
   `,
   styleUrls: ['./twitch.component.scss'],
 })

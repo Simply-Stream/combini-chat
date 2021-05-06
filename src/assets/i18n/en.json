@@ -1,5 +1,6 @@
 {
   "CHAT": {
-    "SEND_MESSAGE_TEXTAREA": "Send a message"
+    "SEND_MESSAGE_TEXTAREA": "Send a message",
+    "COMBINED": "Combined"
   }
 }

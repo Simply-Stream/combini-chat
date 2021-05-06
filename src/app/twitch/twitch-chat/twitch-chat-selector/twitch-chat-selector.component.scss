@@ -1,0 +1,32 @@
+@use "sass:color";
+@import "../../../../variables";
+
+.chat-selector-tabs {
+  .nav-tabs {
+    .nav-item {
+      .nav-link {
+        &.active {
+          &:first-child {
+            border-radius: 0 0 0 0;
+            border-left: none;
+          }
+
+          background: $chat-input-background-color;
+        }
+
+        color: $chat-color-input;
+
+        border-color: $border-primary-color;
+        border-bottom: $border-primary-color;
+        border-top: none;
+
+        border-radius: 0 0 4px 4px;
+      }
+    }
+
+    border-bottom: rgba(255, 255, 255, 0.1) 1px solid;
+  }
+
+  background: $chat-color-primary;
+  border: none;
+}

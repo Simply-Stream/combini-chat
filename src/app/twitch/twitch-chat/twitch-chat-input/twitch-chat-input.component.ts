@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-twitch-chat-input',
@@ -10,12 +10,5 @@ import { Component, OnInit } from '@angular/core';
   `,
   styleUrls: ['./twitch-chat-input.component.scss'],
 })
-export class TwitchChatInputComponent implements OnInit {
-
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
-
+export class TwitchChatInputComponent {
 }

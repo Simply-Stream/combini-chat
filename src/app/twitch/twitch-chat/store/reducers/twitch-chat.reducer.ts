@@ -5,6 +5,7 @@ import { Message } from '../../twitch-chat-message/message';
 export const twitchChatFeatureKey = 'twitchChat';
 
 export interface State {
+  activeChannel: string,
   // Channel that are combined to a super-chat. Needs to be present in `channels` array
   combinedChatChannels: string[] | [],
   // Active tracked channel
@@ -14,6 +15,7 @@ export interface State {
 }
 
 export const initialState: State = {
+  activeChannel: 'combined',
   combinedChatChannels: [],
   channels: [],
   messages: [],
@@ -48,6 +50,14 @@ export const reducer = createReducer(
       ({
         ...state,
         messages: [...state.messages, message],
+      }),
+  ),
+  on(
+    TwitchChatActions.changeChannel,
+    (state: State, {channel}) =>
+      ({
+        ...state,
+        activeChannel: channel,
       }),
   ),
 );

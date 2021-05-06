@@ -11,15 +11,24 @@ import * as fromTwitch from '../reducers';
 import * as fromTwitchChat from './twitch-chat/store/reducers/twitch-chat.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { TwitchChatEffects } from './twitch-chat/store/effects/twitch-chat.effects';
+import { RouterModule } from '@angular/router';
+import { TwitchChatSelectorComponent } from './twitch-chat/twitch-chat-selector/twitch-chat-selector.component';
 
 @NgModule({
-  declarations: [TwitchComponent, TwitchChatComponent, TwitchChatMessageComponent, TwitchChatInputComponent],
+  declarations: [
+    TwitchComponent,
+    TwitchChatComponent,
+    TwitchChatMessageComponent,
+    TwitchChatInputComponent,
+    TwitchChatSelectorComponent,
+  ],
   imports: [
     CommonModule,
     TranslateModule,
     StoreModule.forFeature(fromTwitch.twitchFeatureKey, fromTwitch.reducers, {metaReducers: fromTwitch.metaReducers}),
     StoreModule.forFeature(fromTwitchChat.twitchChatFeatureKey, fromTwitchChat.reducer),
     EffectsModule.forFeature([TwitchChatEffects]),
+    RouterModule,
   ],
   exports: [
     TwitchComponent,

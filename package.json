@@ -1,7 +1,7 @@
 {
   "name": "angular-electron",
-  "version": "9.0.7",
-  "description": "Angular 11 with Electron (Typescript + SASS + Hot Reload)",
+  "version": "0.0.1",
+  "description": "A chat client for twitch that might ease your chat and moderation experience",
   "homepage": "https://github.com/simply-stream/combini-chat",
   "author": {
     "name": "Maxime GRIS",

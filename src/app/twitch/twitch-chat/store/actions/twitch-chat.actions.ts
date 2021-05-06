@@ -24,3 +24,8 @@ export const addMessage = createAction(
   '[Twitch Chat] Add Message',
   (message: Message) => ({message}),
 );
+
+export const changeChannel = createAction(
+  '[Twitch Chat] Change Channel',
+  (channel: string) => ({channel}),
+);
