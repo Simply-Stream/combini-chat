@@ -5,16 +5,14 @@ import { Store } from '@ngrx/store';
 import * as fromTwitchChat from '../store/reducers/twitch-chat.reducer';
 import * as TwitchChatActions from '../store/actions/twitch-chat.actions';
 import { from, Observable } from 'rxjs';
-
-interface Identity {
-  username: string;
-  password: string | (() => (string | Promise<string>));
-}
+import { Identity } from './identity';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TwitchChatService {
+  protected connected = false;
+
   protected defaultOptions = {
     options: {debug: false},
   };
@@ -32,9 +30,10 @@ export class TwitchChatService {
    * @param callback
    * @param identity
    */
-  public connect(channels: string[], callback?: ((channel: string, userstate: ChatUserstate, message: string, self: boolean) => void), identity?: Identity): Observable<[string, number]> {
-    if (this.twitch) {
+  public connect(channels: string[], identity?: Identity, callback?: ((channel: string, userstate: ChatUserstate, message: string, self: boolean) => void)): Observable<[string, number]> {
+    if (this.twitch && this.connected) {
       this.disconnect();
+      this.connected = false;
     }
 
     this.twitch = new Client({
@@ -44,6 +43,7 @@ export class TwitchChatService {
     });
 
     return from(this.twitch.connect().then((value: [server: string, port: number]) => {
+      this.connected = true;
       this.twitch.on('message', (channel: string, userstate: ChatUserstate, message: string, self: boolean) => {
         this.store.dispatch(TwitchChatActions.addMessage({
           channel,
@@ -66,6 +66,10 @@ export class TwitchChatService {
    */
   public join(channel: string): Promise<[string]> {
     return this.twitch.join(channel);
+  }
+
+  public sendMessage(channel: string, message: string): Promise<[string]> {
+    return this.twitch.say(channel, message);
   }
 
   /**

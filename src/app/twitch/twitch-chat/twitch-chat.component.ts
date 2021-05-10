@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Message } from './twitch-chat-message/message';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
@@ -34,7 +34,7 @@ import { addChannel, changeChannel, connect } from './store/actions/twitch-chat.
   styleUrls: ['./twitch-chat.component.scss'],
 })
 // @TODO: Implement pipe to crawl through channels or implement selector for this
-export class TwitchChatComponent implements OnInit, AfterViewInit {
+export class TwitchChatComponent implements AfterViewInit {
   @ViewChild('scrollframe', {static: false}) scrollFrame: ElementRef;
 
   public allChat$: Observable<Message[] | []> = this.store.pipe(select(selectMessages));
@@ -46,9 +46,7 @@ export class TwitchChatComponent implements OnInit, AfterViewInit {
   private isNearBottom = true;
 
   constructor(private store: Store<fromTwitchChat.State>) {
-  }
-
-  ngOnInit(): void {
+    this.store.dispatch(connect());
   }
 
   ngAfterViewInit(): void {
@@ -58,6 +56,7 @@ export class TwitchChatComponent implements OnInit, AfterViewInit {
         this.scrollToBottom();
       }
     });
+
     this.mutationObserver.observe(this.scrollContainer, {childList: true});
   }
 

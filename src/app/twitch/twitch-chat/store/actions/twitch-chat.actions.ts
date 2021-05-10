@@ -1,9 +1,13 @@
 import { createAction } from '@ngrx/store';
 import { Message } from '../../twitch-chat-message/message';
+import { Identity } from '../../services/identity';
 
 export const connect = createAction(
   '[Twitch Chat] Connect',
-  (channel: string[] = []) => ({channel}),
+  (channel: string[] = [], identity?: Identity | never) => ({
+    channel,
+    identity,
+  }),
 );
 
 export const connectSuccess = createAction(
@@ -28,4 +32,9 @@ export const addMessage = createAction(
 export const changeChannel = createAction(
   '[Twitch Chat] Change Channel',
   (channel: string) => ({channel}),
+);
+
+export const sendMessage = createAction(
+  '[Twitch Chat] Send Message',
+  (channel: string, message: string) => ({channel, message}),
 );

@@ -1,4 +1,7 @@
 {
+  "AUTH": {
+    "LOGIN": "Login"
+  },
   "CHAT": {
     "CHANNEL": {
       "ADD": {
