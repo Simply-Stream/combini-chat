@@ -47,6 +47,6 @@ export class TwitchChatSelectorAddComponent {
   }
 
   onChannelAddFailure(reason: string): void {
-    this.addChannelSuccess.emit(reason);
+    this.addChannelFailure.emit(reason);
   }
 }
