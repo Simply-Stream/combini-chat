@@ -5,13 +5,14 @@ import { Store } from '@ngrx/store';
 import * as fromTwitchChat from '../store/reducers/twitch-chat.reducer';
 import * as TwitchChatActions from '../store/actions/twitch-chat.actions';
 import { from, Observable } from 'rxjs';
-import { Identity } from './identity';
+import { Identity } from '../models/identity';
+import { EmoteParserService } from './emote-parser.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TwitchChatService {
-  protected connected = false;
+  protected listeners = [];
 
   protected defaultOptions = {
     options: {debug: false},
@@ -20,7 +21,7 @@ export class TwitchChatService {
   protected twitch?: Client;
   protected alternatingToggle = true;
 
-  constructor(private store: Store<fromTwitchChat.State>) {
+  constructor(private store: Store<fromTwitchChat.State>, private emoteParser: EmoteParserService) {
   }
 
   /**
@@ -31,9 +32,8 @@ export class TwitchChatService {
    * @param identity
    */
   public connect(channels: string[], identity?: Identity, callback?: ((channel: string, userstate: ChatUserstate, message: string, self: boolean) => void)): Observable<[string, number]> {
-    if (this.twitch && this.connected) {
+    if (this.twitch) {
       this.disconnect();
-      this.connected = false;
     }
 
     this.twitch = new Client({
@@ -43,7 +43,10 @@ export class TwitchChatService {
     });
 
     return from(this.twitch.connect().then((value: [server: string, port: number]) => {
-      this.connected = true;
+      if (this.listeners['message']) {
+        return value;
+      }
+
       this.twitch.on('message', (channel: string, userstate: ChatUserstate, message: string, self: boolean) => {
         this.store.dispatch(TwitchChatActions.addMessage({
           channel,

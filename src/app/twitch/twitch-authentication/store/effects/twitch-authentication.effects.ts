@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as TwitchAuthenticationActions from '../actions/twitch-authentication.actions';
 import { loginFailure, loginSuccess } from '../actions/twitch-authentication.actions';
-import { TwitchAuthenticationService } from '../../../serivces/twitch-authentication.service';
+import { TwitchAuthenticationService } from '../../serivces/twitch-authentication.service';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 

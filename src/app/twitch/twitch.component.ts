@@ -3,13 +3,18 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-twitch',
   template: `
-    <nav class="navbar">
-      <div class="container-fluid">
-        <a class="navbar-brand">Combini</a>
-        <app-twitch-authentication></app-twitch-authentication>
+    <div class="twitch-container d-flex flex-column overflow-hidden">
+      <nav class="twitch-header navbar">
+        <div class="container-fluid">
+          <a class="navbar-brand">Combini</a>
+          <app-twitch-authentication></app-twitch-authentication>
+        </div>
+      </nav>
+
+      <div class="flex-fill">
+        <router-outlet></router-outlet>
       </div>
-    </nav>
-    <router-outlet></router-outlet>
+    </div>
   `,
   styleUrls: ['./twitch.component.scss'],
 })

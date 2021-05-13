@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Message } from '../twitch-chat-message/message';
+import { Message } from '../../twitch-chat-message/message';
 
 @Pipe({
   name: 'channelSelect',

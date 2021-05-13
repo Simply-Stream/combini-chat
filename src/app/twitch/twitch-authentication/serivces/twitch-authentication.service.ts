@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authConfig } from './auth-config';
-import { Identity } from '../twitch-chat/services/identity';
+import { Identity } from '../../twitch-chat/models/identity';
 import { from, Observable } from 'rxjs';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class TwitchAuthenticationService {
   public checkLogin(): Observable<boolean> {
     return from(this.oauth.tryLogin().then((success) => {
       if (!success) {
-        return this.oauth.hasValidAccessToken()
+        return this.oauth.hasValidAccessToken();
       }
 
       return success;

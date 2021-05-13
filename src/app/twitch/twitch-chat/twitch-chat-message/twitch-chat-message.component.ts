@@ -13,8 +13,8 @@ import { Message } from './message';
         <!--      <span class="chat-message-badges">{{ message.userstate.badges }} </span>-->
         <div class="align-self-stretch">
           <span class="chat-message-user fw-bold"
-                [style]="{color: message.userstate?.color}">{{ message.userstate.username }}: </span>
-          <span class="chat-message">{{ message.message }}</span>
+                [style]="{color: message.userstate?.color}">{{ message.userstate['display-name'] }}: </span>
+          <span class="chat-message" [innerHTML]="message |emote"></span>
         </div>
       </div>
     </div>

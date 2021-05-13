@@ -10,7 +10,7 @@ import { addChannel, changeChannel, connect } from './store/actions/twitch-chat.
 @Component({
   selector: 'app-twitch-chat',
   template: `
-    <div class="h-100 d-flex flex-column">
+    <div class="chat-app d-flex flex-column h-100">
       <div class="chat-header text-center">
         <h5 class="mb-0">Stream-Chat</h5>
       </div>
@@ -19,14 +19,15 @@ import { addChannel, changeChannel, connect } from './store/actions/twitch-chat.
                                 (addChannel)="onAddChannel($event)"
                                 (changeChannel)="onChangeChannel($event)"></app-twitch-chat-selector>
 
-      <div class="chat-container flex-grow-1 overflow-auto" (scroll)="scrolled()" #scrollframe>
+      <div class="chat-container flex-fill overflow-scroll" (scroll)="scrolled()" #scrollframe>
+        <!-- @TODO: @see https://angular.io/guide/dynamic-component-loader and replace ngFor? -->
         <ng-container
           *ngFor="let message of (allChat$ |async) |channelSelect:getActiveChannel(activeChannel$ |async, channels$ |async); index as i">
           <app-twitch-chat-message [message]="message"></app-twitch-chat-message>
         </ng-container>
       </div>
 
-      <div class="container-fluid align-self-end mb-2">
+      <div class="container-fluid mb-2">
         <app-twitch-chat-input></app-twitch-chat-input>
       </div>
     </div>

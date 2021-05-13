@@ -1,3 +1,9 @@
+@import "../../variables";
+
 .twitch-container {
   height: 100%;
+}
+
+.twitch-header a {
+  color: $chat-color-input;
 }

@@ -1,5 +1,5 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
-import { AppConfig } from '../../../environments/environment';
+import { AppConfig } from '../../../../environments/environment';
 
 export const authConfig: AuthConfig = {
   issuer: 'https://id.twitch.tv/oauth2',

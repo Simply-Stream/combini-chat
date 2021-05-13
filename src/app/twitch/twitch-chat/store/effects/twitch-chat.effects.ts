@@ -9,7 +9,7 @@ import { EMPTY } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { State } from '../reducers/twitch-chat.reducer';
 import { selectChannels } from '../selectors/twitch-chat.selectors';
-import { TwitchAuthenticationService } from '../../../serivces/twitch-authentication.service';
+import { TwitchAuthenticationService } from '../../../twitch-authentication/serivces/twitch-authentication.service';
 
 @Injectable()
 export class TwitchChatEffects {
