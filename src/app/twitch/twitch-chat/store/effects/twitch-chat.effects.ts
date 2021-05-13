@@ -34,9 +34,11 @@ export class TwitchChatEffects {
   );
 
   addChannel$ = createEffect(() => this.actions$.pipe(
-    ofType(TwitchChatActions.addChannel),
-    tap(({channel}) => {
-      this.twitchService.join(channel);
+    ofType(TwitchChatActions.addChannels),
+    tap(({channels}) => {
+      channels.forEach(channel => {
+        this.twitchService.join(channel);
+      });
     }),
   ), {dispatch: false});
 

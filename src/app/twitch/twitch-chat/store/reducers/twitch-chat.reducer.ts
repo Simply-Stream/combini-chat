@@ -31,10 +31,10 @@ export const reducer = createReducer(
     }),
   ),
   on(
-    TwitchChatActions.addChannel,
-    (state: State, {channel}) => ({
+    TwitchChatActions.addChannels,
+    (state: State, {channels}) => ({
       ...state,
-      channels: [...state.channels, channel],
+      channels: [...state.channels, ...channels],
     }),
   ),
   on(

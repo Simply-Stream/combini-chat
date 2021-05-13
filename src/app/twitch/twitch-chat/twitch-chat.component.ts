@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 
 import * as fromTwitchChat from './store/reducers/twitch-chat.reducer';
 import { selectActiveChannel, selectChannels, selectMessages } from './store/selectors/twitch-chat.selectors';
-import { addChannel, changeChannel, connect } from './store/actions/twitch-chat.actions';
+import { addChannels, changeChannel, connect } from './store/actions/twitch-chat.actions';
 
 @Component({
   selector: 'app-twitch-chat',
@@ -65,8 +65,9 @@ export class TwitchChatComponent implements AfterViewInit {
     this.store.dispatch(changeChannel(channel));
   }
 
-  onAddChannel(channel: string): void {
-    this.store.dispatch(addChannel(channel));
+  onAddChannel(channels: string): void {
+    const channelToAdd = channels.split(' ');
+    this.store.dispatch(addChannels(channelToAdd));
   }
 
   scrolled(): void {

@@ -14,9 +14,9 @@ export const connectSuccess = createAction(
   '[Twitch Chat] Connect Success',
 );
 
-export const addChannel = createAction(
-  '[Twitch Chat] Add Channel',
-  (channel: string) => ({channel}),
+export const addChannels = createAction(
+  '[Twitch Chat] Add Channels',
+  (channels: string[]) => ({channels}),
 );
 
 export const addCombinedChatChannel = createAction(
