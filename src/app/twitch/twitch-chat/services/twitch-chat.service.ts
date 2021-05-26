@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ChatUserstate, Client } from 'tmi.js';
+import { ChatUserstate, Client, RoomState } from 'tmi.js';
 import { Store } from '@ngrx/store';
 
 import * as fromTwitchChat from '../store/reducers/twitch-chat.reducer';
@@ -43,10 +43,6 @@ export class TwitchChatService {
     });
 
     return from(this.twitch.connect().then((value: [server: string, port: number]) => {
-      if (this.listeners['message']) {
-        return value;
-      }
-
       this.twitch.on('message', (channel: string, userstate: ChatUserstate, message: string, self: boolean) => {
         this.store.dispatch(TwitchChatActions.addMessage({
           channel,
@@ -59,6 +55,10 @@ export class TwitchChatService {
           return callback(channel, userstate, message, self);
         }
       });
+
+      this.twitch.on('roomstate', (channel: string, roomState: RoomState) =>
+        this.store.dispatch(TwitchChatActions.roomState(roomState)),
+      );
 
       return value;
     }));
@@ -80,5 +80,9 @@ export class TwitchChatService {
    */
   public disconnect(): void {
     this.twitch.disconnect();
+  }
+
+  public getChannels(): string[] {
+    return this.twitch.getChannels();
   }
 }

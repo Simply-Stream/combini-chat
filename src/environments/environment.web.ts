@@ -6,4 +6,10 @@ export const AppConfig = {
     loginUrl: 'https://id.twitch.tv/oauth2/authorize',
     tokenUrl: 'https://id.twitch.tv/oauth2/token',
   },
+  bttv: {
+    endpoints: {
+      api: 'https://api.betterttv.net/3/',
+      cdn: 'https://cdn.betterttv.net/',
+    },
+  },
 };
