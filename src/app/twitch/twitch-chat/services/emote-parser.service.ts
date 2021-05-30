@@ -15,7 +15,7 @@ export class EmoteParserService implements EmoteParserInterface {
         const pos = message.userstate.emotes[emoteId][0].split('-');
 
         // @TODO: Actually use what twitch sends us and only override these parts
-        const emoteCode = parsedMessage.slice(parseInt(pos[0]), parseInt(pos[1]) + 1);
+        const emoteCode = message.message.slice(parseInt(pos[0]), parseInt(pos[1]) + 1);
         parsedMessage = parsedMessage
           .replace(
             new RegExp(emoteCode.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
