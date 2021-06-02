@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ChatUserstate, Client, RoomState } from 'tmi.js';
 import { Store } from '@ngrx/store';
-
-import * as fromTwitchChat from '../store/reducers/twitch-chat.reducer';
-import * as TwitchChatActions from '../store/actions/twitch-chat.actions';
 import { from, Observable } from 'rxjs';
+import { ChatUserstate, Client, RoomState } from 'tmi.js';
 import { Identity } from '../models/identity';
+import * as TwitchChatActions from '../store/actions/twitch-chat.actions';
+import * as fromTwitchChat from '../store/reducers/twitch-chat.reducer';
 import { EmoteParserService } from './emote-parser.service';
 
 @Injectable({

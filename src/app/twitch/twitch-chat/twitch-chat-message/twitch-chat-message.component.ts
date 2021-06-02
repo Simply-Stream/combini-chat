@@ -14,7 +14,7 @@ import { Message } from './message';
         <div class="align-self-stretch">
           <span class="chat-message-user fw-bold"
                 [style]="{color: message.userstate?.color}">{{ message.userstate['display-name'] }}: </span>
-          <span class="chat-message" [innerHTML]="message |emote|async"></span>
+          <span class="chat-message" [innerHTML]="message |emote"></span>
         </div>
       </div>
     </div>

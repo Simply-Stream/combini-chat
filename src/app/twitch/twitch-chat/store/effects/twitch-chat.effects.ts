@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { select, Store } from '@ngrx/store';
+import { EMPTY } from 'rxjs';
+import { catchError, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
+import { TwitchAuthenticationService } from '../../../twitch-authentication/serivces/twitch-authentication.service';
+import * as TwitchAuthActions from '../../../twitch-authentication/store/actions/twitch-authentication.actions';
 import { TwitchChatService } from '../../services/twitch-chat.service';
+import { BttvEmoteService } from '../../services/bttv-emote.service';
 import * as TwitchChatActions from '../actions/twitch-chat.actions';
 import { connectSuccess } from '../actions/twitch-chat.actions';
-import * as TwitchAuthActions from '../../../twitch-authentication/store/actions/twitch-authentication.actions';
-import { catchError, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
-import { select, Store } from '@ngrx/store';
 import { State } from '../reducers/twitch-chat.reducer';
 import { selectChannels } from '../selectors/twitch-chat.selectors';
-import { TwitchAuthenticationService } from '../../../twitch-authentication/serivces/twitch-authentication.service';
-import { BttvParserService } from '../../services/bttv-parser.service';
 
 @Injectable()
 export class TwitchChatEffects {
@@ -29,8 +29,7 @@ export class TwitchChatEffects {
         .pipe(
           map(() => connectSuccess()),
           catchError(() => EMPTY),
-        ),
-      ),
+        )),
     ),
   );
 
@@ -52,12 +51,18 @@ export class TwitchChatEffects {
 
   roomState$ = createEffect(() => this.actions$.pipe(
     ofType(TwitchChatActions.roomState),
-    mergeMap(({roomState}) => this.bttvEmoteParser.updateChannelEmotes(roomState['room-id']).pipe(
-      map((emotes) => TwitchChatActions.roomStateSuccess()),
+    mergeMap(({roomState}) => this.bttvEmotes.updateChannelEmotes(roomState['room-id']).pipe(
+      map(() => TwitchChatActions.roomStateSuccess()),
       catchError(() => EMPTY),
     )),
   ));
 
-  constructor(private actions$: Actions, private store: Store<State>, private twitchService: TwitchChatService, private authService: TwitchAuthenticationService, private bttvEmoteParser: BttvParserService) {
+  constructor(
+    private actions$: Actions,
+    private store: Store<State>,
+    private twitchService: TwitchChatService,
+    private authService: TwitchAuthenticationService,
+    private bttvEmotes: BttvEmoteService,
+  ) {
   }
 }

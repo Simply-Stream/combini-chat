@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Message } from '../twitch-chat-message/message';
 import { EmoteParserInterface } from './emote-parser-interface';
-import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmoteParserService implements EmoteParserInterface {
-  parse(message: Message): Observable<string> {
+  parse(message: Message): string {
     let parsedMessage = message.message;
 
     if (message.userstate.emotes) {
@@ -26,6 +25,6 @@ export class EmoteParserService implements EmoteParserInterface {
 
     message.message = parsedMessage;
 
-    return of(parsedMessage);
+    return parsedMessage;
   }
 }

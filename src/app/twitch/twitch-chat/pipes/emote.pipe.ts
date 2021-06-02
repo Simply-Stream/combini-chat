@@ -1,17 +1,21 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { BttvParserService } from '../services/bttv-parser.service';
+import { EmoteParserInterface } from '../services/emote-parser-interface';
 import { EmoteParserService } from '../services/emote-parser.service';
 import { Message } from '../twitch-chat-message/message';
-import { BttvParserService } from '../services/bttv-parser.service';
-import { Observable } from 'rxjs';
 
 @Pipe({
   name: 'emote',
 })
 export class EmotePipe implements PipeTransform {
-  constructor(private emoteParser: EmoteParserService, private bttvParser: BttvParserService) {
+  protected parsers: EmoteParserInterface[];
+
+  constructor(private sanitizer: DomSanitizer, emoteParser: EmoteParserService, bttvParser: BttvParserService) {
+    this.parsers = [emoteParser, bttvParser];
   }
 
-  transform(message: Message): Observable<string> {
+  transform(message: Message): SafeHtml {
     const parsedMessage: Message = {
       userstate: message.userstate,
       message: message.message,
@@ -19,10 +23,10 @@ export class EmotePipe implements PipeTransform {
       background: message.background,
     };
 
-    if (parsedMessage.userstate.emotes) {
-      this.emoteParser.parse(parsedMessage);
+    for (const parser of this.parsers) {
+      parser.parse(parsedMessage);
     }
 
-    return this.bttvParser.parse(parsedMessage);
+    return this.sanitizer.bypassSecurityTrustHtml(parsedMessage.message);
   }
 }

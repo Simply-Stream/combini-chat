@@ -1,7 +1,7 @@
 import { createAction } from '@ngrx/store';
-import { Message } from '../../twitch-chat-message/message';
-import { Identity } from '../../models/identity';
 import { RoomState } from 'tmi.js';
+import { Identity } from '../../models/identity';
+import { Message } from '../../twitch-chat-message/message';
 
 export const connect = createAction(
   '[Twitch Chat] Connect',
