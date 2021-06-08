@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AppConfig } from '../../../../environments/environment';
+import { BttvEmote } from "app/twitch/twitch-chat/models/bttv-emote";
+import { EmoteSanitizerService } from "app/twitch/twitch-chat/services/emote-sanitizer.service";
+import { AppConfig } from 'environments/environment';
 import { Message } from '../twitch-chat-message/message';
 import { BttvEmoteService } from './bttv-emote.service';
 import { EmoteParserInterface } from './emote-parser-interface';
@@ -8,35 +10,47 @@ import { EmoteParserInterface } from './emote-parser-interface';
   providedIn: 'root',
 })
 export class BttvParserService implements EmoteParserInterface {
-  constructor(private bttvEmotes: BttvEmoteService) {
+  constructor(protected bttvEmotes: BttvEmoteService, protected emoteSanitizer: EmoteSanitizerService) {
   }
 
   parse(message: Message): string {
     return this.parseEmotes(message);
   }
 
+  protected replaceEmote(emote: BttvEmote, message: string): string {
+    const emoteCode = this.emoteSanitizer.sanitize(emote.code);
+    const regExp = new RegExp(`((?!\\w)|\\s|^)${ emoteCode }((?!\\w)|\\s|$)`, 'g');
+
+    return message.replace(regExp, `$1${ this.constructImage(emote) }$2`);
+  }
+
+  /**
+   * @param {BttvEmote} emote
+   * @returns {string}
+   * @protected
+   *
+   * @TODO: Find a more angular-like way of doing this
+   */
+  protected constructImage(emote: BttvEmote): string {
+    return `<img title="${ emote.code }" alt="${ emote.code }" src="${ AppConfig.bttv.endpoints.cdn }emote/${ emote.id }/1x">`;
+  }
+
   protected parseEmotes(message: Message): string {
-    for (const emote of this.bttvEmotes.getGlobalEmotes()) {
-      if (message.message.indexOf(emote.code) >= 0) {
-        const emoteCode = emote.code.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const regExp = new RegExp(`($|\\s)${ emoteCode }(^|\\s)`);
-
-        message.message = message.message.replace(
-          new RegExp(regExp, 'g'),
-          '<img title="' + emote.code + '" alt="' + emote.code + '" src="' + AppConfig.bttv.endpoints.cdn + 'emote/' + emote.id + '/1x">',
-        );
-      }
-    }
-
     const channelId = message.userstate['room-id'];
     const channelEmotes = this.bttvEmotes.getChannelEmotes(channelId);
+    const emoteSets = [
+      this.bttvEmotes.getGlobalEmotes(),
+      channelEmotes['channelEmotes'],
+      channelEmotes['sharedEmotes'],
+    ];
 
-    if (channelEmotes.channelEmotes.length > 0) {
-      for (const emote of channelEmotes.sharedEmotes) {
-        message.message = message.message.replace(
-          new RegExp(emote.code.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
-          '<img title="' + emote.code + '" alt="' + emote.code + '" src="' + AppConfig.bttv.endpoints.cdn + 'emote/' + emote.id + '/1x">',
-        );
+    for (const emoteSet of emoteSets) {
+      for (const emote of emoteSet) {
+        if (message.message.indexOf(emote.code) < 0) {
+          continue;
+        }
+
+        message.message = this.replaceEmote(emote, message.message);
       }
     }
 

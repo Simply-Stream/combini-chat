@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { HtmlSanitizerService } from "app/twitch/twitch-chat/services/html-sanitizer.service";
 import { from, Observable } from 'rxjs';
 import { ChatUserstate, Client, RoomState } from 'tmi.js';
 import { Identity } from '../models/identity';
 import * as TwitchChatActions from '../store/actions/twitch-chat.actions';
 import * as fromTwitchChat from '../store/reducers/twitch-chat.reducer';
-import { EmoteParserService } from './emote-parser.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class TwitchChatService {
   protected twitch?: Client;
   protected alternatingToggle = true;
 
-  constructor(private store: Store<fromTwitchChat.State>, private emoteParser: EmoteParserService) {
+  constructor(private store: Store<fromTwitchChat.State>, private htmlSanitizer: HtmlSanitizerService) {
   }
 
   /**
@@ -41,12 +41,15 @@ export class TwitchChatService {
       identity,
     });
 
+    // @TODO: Throw this either into an EventEmitter or into the store directly
     return from(this.twitch.connect().then((value: [server: string, port: number]) => {
       this.twitch.on('message', (channel: string, userstate: ChatUserstate, message: string, self: boolean) => {
+        // @TODO: Clean message string from HTML
         this.store.dispatch(TwitchChatActions.addMessage({
           channel,
           userstate,
-          message,
+          message: this.htmlSanitizer.sanitize(message),
+          // @TODO: Remove the background-alternation from this property
           background: (self ? 'self' : ((this.alternatingToggle = !this.alternatingToggle) ? 'alternate' : null)),
         }));
 
@@ -70,6 +73,11 @@ export class TwitchChatService {
     return this.twitch.join(channel);
   }
 
+  /**
+   * @param {string} channel
+   * @param {string} message
+   * @returns {Promise<[string]>}
+   */
   public sendMessage(channel: string, message: string): Promise<[string]> {
     return this.twitch.say(channel, message);
   }
@@ -81,6 +89,9 @@ export class TwitchChatService {
     this.twitch.disconnect();
   }
 
+  /**
+   * @returns {string[]}
+   */
   public getChannels(): string[] {
     return this.twitch.getChannels();
   }

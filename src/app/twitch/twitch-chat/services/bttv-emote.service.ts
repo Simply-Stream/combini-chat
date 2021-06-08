@@ -1,29 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BttvEmote } from "app/twitch/twitch-chat/models/bttv-emote";
+import { BttvUserResponse } from "app/twitch/twitch-chat/models/bttv-user-response";
+import { ChannelEmotes } from "app/twitch/twitch-chat/models/channel-emotes";
+import { AppConfig } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppConfig } from '../../../../environments/environment';
-
-export interface BttvChannelEmoteResponse {
-  id: string;
-  bots: string[];
-  channelEmotes: BttvEmote[];
-  sharedEmotes: BttvEmote[];
-}
-
-export interface BttvEmote {
-  id: string;
-  code: string;
-  imageType: string;
-  userId: string;
-}
-
-export interface ChannelEmotes {
-  [channelId: string]: {
-    channelEmotes: BttvEmote[],
-    sharedEmotes: BttvEmote[]
-  };
-}
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +35,7 @@ export class BttvEmoteService {
   }
 
   updateChannelEmotes(channelId: string): Observable<ChannelEmotes> {
-    return this.http.get<BttvChannelEmoteResponse>(AppConfig.bttv.endpoints.api + 'cached/users/twitch/' + channelId).pipe(
+    return this.http.get<BttvUserResponse>(AppConfig.bttv.endpoints.api + 'cached/users/twitch/' + channelId).pipe(
       map(emotes => {
         this.channelEmotes[channelId] = {
           ...this.channelEmotes[channelId],

@@ -27,6 +27,6 @@ export class EmotePipe implements PipeTransform {
       parser.parse(parsedMessage);
     }
 
-    return this.sanitizer.bypassSecurityTrustHtml(parsedMessage.message);
+    return parsedMessage.message;
   }
 }
