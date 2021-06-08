@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import * as fromTwitchAuthentication from './store/reducers/twitch-authentication.reducer';
-import { selectIsLoggedIn, selectUsername } from './store/selectors/twitch-authentication.selectors';
 import { Observable } from 'rxjs';
 import { checkLogin, login, logout } from './store/actions/twitch-authentication.actions';
+import * as fromTwitchAuthentication from './store/reducers/twitch-authentication.reducer';
+import { selectIsLoggedIn, selectUsername } from './store/selectors/twitch-authentication.selectors';
 
 @Component({
   selector: 'app-twitch-authentication',

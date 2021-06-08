@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { Message } from './twitch-chat-message/message';
-import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { addChannels, changeChannel, connect } from './store/actions/twitch-chat.actions';
 
 import * as fromTwitchChat from './store/reducers/twitch-chat.reducer';
 import { selectActiveChannel, selectChannels, selectMessages } from './store/selectors/twitch-chat.selectors';
-import { addChannels, changeChannel, connect } from './store/actions/twitch-chat.actions';
+import { Message } from './twitch-chat-message/message';
 
 @Component({
   selector: 'app-twitch-chat',

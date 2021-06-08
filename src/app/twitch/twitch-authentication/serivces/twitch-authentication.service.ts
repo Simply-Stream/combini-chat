@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { authConfig } from './auth-config';
-import { Identity } from '../../twitch-chat/models/identity';
 import { from, Observable } from 'rxjs';
+import { Identity } from '../../twitch-chat/models/identity';
+import { authConfig } from './auth-config';
 
 @Injectable({
   providedIn: 'root',

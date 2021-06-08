@@ -2,6 +2,8 @@ import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
+if (require('electron-squirrel-startup')) app.quit();
+
 // Initialize remote module
 require('@electron/remote/main').initialize();
 
