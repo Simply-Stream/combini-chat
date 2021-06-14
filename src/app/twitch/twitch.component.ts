@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BadgesService } from "app/twitch/twitch-chat/services/badges.service";
 import { BttvEmoteService } from './twitch-chat/services/bttv-emote.service';
 
 @Component({
@@ -20,10 +21,12 @@ import { BttvEmoteService } from './twitch-chat/services/bttv-emote.service';
   styleUrls: ['./twitch.component.scss'],
 })
 export class TwitchComponent implements OnInit {
-  constructor(private bttvEmotes: BttvEmoteService) {
+  constructor(private bttvEmotes: BttvEmoteService, private badge: BadgesService) {
   }
 
   ngOnInit(): void {
+    // @TODO: Move into effects
     this.bttvEmotes.updateGlobalEmotes().subscribe();
+    this.badge.updateGlobalBadges().subscribe();
   }
 }

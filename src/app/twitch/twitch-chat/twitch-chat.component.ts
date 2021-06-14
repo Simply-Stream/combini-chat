@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
+import { BadgesService } from "app/twitch/twitch-chat/services/badges.service";
 import { Observable } from 'rxjs';
 import { addChannels, changeChannel, connect } from './store/actions/twitch-chat.actions';
 
@@ -23,7 +24,7 @@ import { Message } from './twitch-chat-message/message';
         <!-- @TODO: @see https://angular.io/guide/dynamic-component-loader and replace ngFor? -->
         <ng-container
           *ngFor="let message of (allChat$ |async) |channelSelect:getActiveChannel(activeChannel$ |async, channels$ |async); index as i">
-          <app-twitch-chat-message [message]="message"></app-twitch-chat-message>
+          <app-twitch-chat-message [message]="message" [badges]="badges.getBadges()"></app-twitch-chat-message>
         </ng-container>
       </div>
 
@@ -41,12 +42,11 @@ export class TwitchChatComponent implements AfterViewInit {
   public allChat$: Observable<Message[] | []> = this.store.pipe(select(selectMessages));
   public channels$: Observable<string[]> = this.store.pipe(select(selectChannels));
   public activeChannel$: Observable<string> = this.store.pipe(select(selectActiveChannel));
-
   private scrollContainer: any;
   private mutationObserver: MutationObserver;
   private isNearBottom = true;
 
-  constructor(private store: Store<fromTwitchChat.State>) {
+  constructor(private store: Store<fromTwitchChat.State>, public badges: BadgesService) {
     this.store.dispatch(connect());
   }
 

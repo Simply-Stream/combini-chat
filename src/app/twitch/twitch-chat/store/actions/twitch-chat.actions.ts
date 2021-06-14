@@ -48,3 +48,37 @@ export const roomState = createAction(
 export const roomStateSuccess = createAction(
   '[Twitch Chat] Room State Success',
 );
+
+export const updateGlobalBadges = createAction(
+  '[Twitch Chat] Update Global Badges',
+);
+
+export const updateGlobalBadgesSuccess = createAction(
+  '[Twitch Chat] Update Global Badges Success',
+);
+
+export const updateChannelBadges = createAction(
+  '[Twitch Chat] Update Channel Badges',
+  (channelId: string) => ({channelId}),
+);
+
+export const updateChannelBadgesSuccess = createAction(
+  '[Twitch Chat] Update Channel Badges Success',
+);
+
+export const updateGlobalEmotes = createAction(
+  '[Twitch Chat] Update Global Emotes',
+);
+
+export const updateGlobalEmotesSuccess = createAction(
+  '[Twitch Chat] Update Global Emotes Success',
+);
+
+export const updateChannelEmotes = createAction(
+  '[Twitch Chat] Update Channel Emotes',
+  (channelId: string) => ({channelId}),
+);
+
+export const updateChannelEmotesSuccess = createAction(
+  '[Twitch Chat] Update Channel Emotes Success',
+);
