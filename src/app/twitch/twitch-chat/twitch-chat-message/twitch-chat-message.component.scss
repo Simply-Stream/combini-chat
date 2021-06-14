@@ -14,5 +14,19 @@
     color: color.adjust($chat-color-primary, $lightness: 50%);
   }
 
+  .chat-message {
+    a.chat-message-link.chat-message-link-url {
+      &:hover {
+        color: $chat-link-hover;
+        background: $chat-link-hover-background;
+        border-radius: $chat-link-hover-background-radius;
+      }
+
+      color: $chat-link-normal;
+      text-decoration: none;
+    }
+  }
+
   padding: .25rem var(--bs-gutter-x, 0.75rem);
+  font-size: $chat-font-size;
 }

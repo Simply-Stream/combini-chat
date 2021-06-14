@@ -10,7 +10,7 @@ import * as fromTwitchChat from '../store/reducers/twitch-chat.reducer';
 @Injectable({
   providedIn: 'root',
 })
-export class TwitchChatService {
+export class ChatService {
   protected listeners = [];
 
   protected defaultOptions = {

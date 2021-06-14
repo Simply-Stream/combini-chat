@@ -5,6 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { LinkyModule } from "ngx-linky";
 
 import * as fromTwitch from '../reducers';
 import { TwitchAuthenticationEffects } from './twitch-authentication/store/effects/twitch-authentication.effects';
@@ -14,6 +15,7 @@ import { EmotePipe } from './twitch-chat/pipes/emote.pipe';
 
 import { TwitchChatEffects } from './twitch-chat/store/effects/twitch-chat.effects';
 import * as fromTwitchChat from './twitch-chat/store/reducers/twitch-chat.reducer';
+import { TwitchChatBadgeComponent } from './twitch-chat/twitch-chat-badge/twitch-chat-badge.component';
 import { TwitchChatInputComponent } from './twitch-chat/twitch-chat-input/twitch-chat-input.component';
 import { TwitchChatMessageComponent } from './twitch-chat/twitch-chat-message/twitch-chat-message.component';
 
@@ -23,7 +25,6 @@ import { TwitchChatSelectorComponent } from './twitch-chat/twitch-chat-selector/
 import { TwitchChatComponent } from './twitch-chat/twitch-chat.component';
 
 import { TwitchComponent } from './twitch.component';
-import { TwitchChatBadgeComponent } from './twitch-chat/twitch-chat-badge/twitch-chat-badge.component';
 
 const components = [
   TwitchComponent,
@@ -55,6 +56,7 @@ const pipes = [
     EffectsModule.forFeature([TwitchChatEffects, TwitchAuthenticationEffects]),
     RouterModule,
     OAuthModule.forRoot(),
+    LinkyModule,
   ],
   exports: [
     TwitchComponent,

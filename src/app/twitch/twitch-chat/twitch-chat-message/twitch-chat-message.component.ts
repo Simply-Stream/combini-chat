@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Badge } from "app/twitch/twitch-chat/models/badge";
 import { Message } from './message';
 
 @Component({
   selector: 'app-twitch-chat-message',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <div class="chat-message-wrapper"
          [class.highlighted]="message.background === 'self'"
@@ -19,7 +20,8 @@ import { Message } from './message';
         </span>
           <span class="chat-message-user fw-bold"
                 [style]="{color: message.userstate?.color}">{{ message.userstate['display-name'] }}: </span>
-          <span class="chat-message" [innerHTML]="message |emote"></span>
+          <span class="chat-message"
+                [innerHTML]="(message |emote).message |linky:{stripPrefix: false, stripTrailingSlash: false, truncate: {length: 64}, className: 'chat-message-link'}"></span>
         </div>
       </div>
     </div>
