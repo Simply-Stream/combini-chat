@@ -4,6 +4,12 @@
   height: 100%;
 }
 
-.twitch-header a {
-  color: $chat-color-input;
+nav.twitch-header.navbar {
+  a {
+    &.navbar-brand {
+      font-weight: bold;
+    }
+
+    color: $chat-color-input;
+  }
 }

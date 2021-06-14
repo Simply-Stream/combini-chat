@@ -10,7 +10,7 @@ export class HtmlSanitizerService {
     ">": "&gt;",
     '"': '&quot;',
     "'": '&#39;',
-    "/": '&#x2F;',
+    "/": '/',
   };
 
   public sanitize(html: string): string {

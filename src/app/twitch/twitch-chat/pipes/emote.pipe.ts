@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { BttvParserService } from '../services/bttv-parser.service';
 import { EmoteParserInterface } from '../services/emote-parser-interface';
 import { EmoteParserService } from '../services/emote-parser.service';
@@ -15,7 +15,7 @@ export class EmotePipe implements PipeTransform {
     this.parsers = [emoteParser, bttvParser];
   }
 
-  transform(message: Message): SafeHtml {
+  transform(message: Message): Message {
     const parsedMessage: Message = {
       userstate: message.userstate,
       message: message.message,
@@ -27,6 +27,6 @@ export class EmotePipe implements PipeTransform {
       parser.parse(parsedMessage);
     }
 
-    return parsedMessage.message;
+    return parsedMessage;
   }
 }
