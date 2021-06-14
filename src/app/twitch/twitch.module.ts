@@ -23,6 +23,7 @@ import { TwitchChatSelectorComponent } from './twitch-chat/twitch-chat-selector/
 import { TwitchChatComponent } from './twitch-chat/twitch-chat.component';
 
 import { TwitchComponent } from './twitch.component';
+import { TwitchChatBadgeComponent } from './twitch-chat/twitch-chat-badge/twitch-chat-badge.component';
 
 const components = [
   TwitchComponent,
@@ -32,6 +33,7 @@ const components = [
   TwitchChatSelectorComponent,
   TwitchChatSelectorAddComponent,
   TwitchAuthenticationComponent,
+  TwitchChatBadgeComponent,
 ];
 
 const pipes = [

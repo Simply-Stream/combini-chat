@@ -15,6 +15,10 @@ export class BadgesService {
   constructor(protected http: HttpClient) {
   }
 
+  getBadges = (): { global: BadgeResponse['badge_sets'], channel: { [channelId: string]: BadgeResponse['badge_sets'] } } =>
+    ({global: this.globalBadges, channel: this.channelBadges});
+
+
   /**
    * @returns {BadgeResponse["badge_sets"]}
    */
@@ -31,7 +35,7 @@ export class BadgesService {
    */
   updateGlobalBadges(): Observable<BadgeResponse['badge_sets']> {
     return this.http.get<BadgeResponse>(AppConfig.twitch.endpoints.badges.global).pipe(
-      map(response => this.globalBadges = response["badge-sets"]),
+      map(response => this.globalBadges = response["badge_sets"]),
     );
   }
 
