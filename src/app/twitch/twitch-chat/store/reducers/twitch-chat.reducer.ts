@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { Message } from '../../twitch-chat-message/message';
+import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/message';
 import * as TwitchChatActions from '../actions/twitch-chat.actions';
 
 export const twitchChatFeatureKey = 'twitchChat';
