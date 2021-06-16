@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { BadgesService } from "app/twitch/twitch-chat/services/badges.service";
+import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/message';
 import { Observable } from 'rxjs';
 import { addChannels, changeChannel, connect } from './store/actions/twitch-chat.actions';
 
 import * as fromTwitchChat from './store/reducers/twitch-chat.reducer';
 import { selectActiveChannel, selectChannels, selectMessages } from './store/selectors/twitch-chat.selectors';
-import { Message } from './twitch-chat-message/message';
 
 @Component({
   selector: 'app-twitch-chat',
@@ -22,6 +22,10 @@ import { Message } from './twitch-chat-message/message';
 
       <div class="chat-container flex-fill overflow-scroll" (scroll)="scrolled()" #scrollframe>
         <!-- @TODO: @see https://angular.io/guide/dynamic-component-loader and replace ngFor? -->
+        <!--
+        @TODO: This needs to be replaced by a faster method, like simply appending to the dom without re-rendering
+               everything before
+        -->
         <ng-container
           *ngFor="let message of (allChat$ |async) |channelSelect:getActiveChannel(activeChannel$ |async, channels$ |async); index as i">
           <app-twitch-chat-message [message]="message" [badges]="badges.getBadges()"></app-twitch-chat-message>

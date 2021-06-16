@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BttvEmote } from "app/twitch/twitch-chat/models/bttv-emote";
 import { EmoteSanitizerService } from "app/twitch/twitch-chat/services/emote-sanitizer.service";
 import { AppConfig } from 'environments/environment';
-import { Message } from '../twitch-chat-message/message';
+import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/message';
 import { BttvEmoteService } from './bttv-emote.service';
 import { EmoteParserInterface } from './emote-parser-interface';
 

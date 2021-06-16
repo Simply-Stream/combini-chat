@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Message } from '../../twitch-chat-message/message';
+import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/message';
 import * as fromTwitchChat from '../reducers/twitch-chat.reducer';
 
 export const selectTwitchChatState = createFeatureSelector<fromTwitchChat.State>(

@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { BttvParserService } from '../services/bttv-parser.service';
 import { EmoteParserInterface } from '../services/emote-parser-interface';
 import { EmoteParserService } from '../services/emote-parser.service';
-import { Message } from '../twitch-chat-message/message';
+import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/message';
 
 @Pipe({
   name: 'emote',

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { DomSanitizer } from "@angular/platform-browser";
 import { Badge } from "app/twitch/twitch-chat/models/badge";
-import { Message } from './message';
+import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/message';
 
 @Component({
   selector: 'app-twitch-chat-message',
@@ -11,6 +12,10 @@ import { Message } from './message';
          [class.alternating]="message.background === 'alternate'">
       <div class="chat-message-channel small align-self-start">
         [{{ message.channel |slice:1 }}]
+        <span *ngIf="message.userstate['reply-parent-msg-id']">
+          Reply to @{{ message.userstate["reply-parent-display-name"] }}:
+          {{ message.userstate["reply-parent-msg-body"] |slice:0:50 }}
+        </span>
       </div>
 
       <div class="d-flex">
@@ -21,7 +26,7 @@ import { Message } from './message';
           <span class="chat-message-user fw-bold"
                 [style]="{color: message.userstate?.color}">{{ message.userstate['display-name'] }}: </span>
           <span class="chat-message"
-                [innerHTML]="(message |emote).message |linky:{stripPrefix: false, stripTrailingSlash: false, truncate: {length: 64}, className: 'chat-message-link'}"></span>
+                [innerHTML]="sanitizer.bypassSecurityTrustHtml((message |emote).message |linky:{stripPrefix: false, stripTrailingSlash: false, truncate: {length: 64}, className: 'chat-message-link'})"></span>
         </div>
       </div>
     </div>
@@ -38,6 +43,9 @@ export class TwitchChatMessageComponent implements OnInit {
   // @TODO: Refactor with ngOnInit bullshittery
   public parsedBadges: Badge[] = [];
 
+  constructor(public sanitizer: DomSanitizer) {
+  }
+
   public ngOnInit(): void {
     if (!this.message.userstate["badges-raw"]) {
       return;
@@ -48,7 +56,9 @@ export class TwitchChatMessageComponent implements OnInit {
       for (const badge of badges) {
         const splittedBadge = badge.split('/');
 
-        if (this.badges.channel[this.message.userstate["room-id"]][splittedBadge[0].trim()]) {
+        if (this.badges.channel &&
+          this.badges.channel[this.message.userstate["room-id"]] &&
+          this.badges.channel[this.message.userstate["room-id"]][splittedBadge[0].trim()]) {
           const badgeVersions = this.badges.channel[this.message.userstate["room-id"]][splittedBadge[0].trim()];
 
           if (badgeVersions.versions[splittedBadge[1]]) {
@@ -59,7 +69,7 @@ export class TwitchChatMessageComponent implements OnInit {
           continue;
         }
 
-        if (this.badges.global[splittedBadge[0]]) {
+        if (this.badges.global && this.badges.global[splittedBadge[0]]) {
           this.parsedBadges.push(this.badges.global[splittedBadge[0]].versions[splittedBadge[1]]);
         }
       }
