@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { BadgesService } from "app/twitch/twitch-chat/services/badges.service";
 import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/message';
 import { Observable } from 'rxjs';
-import { addChannels, changeChannel, connect } from './store/actions/twitch-chat.actions';
+import { addChannels, changeChannel, connect, removeChannel } from './store/actions/twitch-chat.actions';
 
 import * as fromTwitchChat from './store/reducers/twitch-chat.reducer';
 import { selectActiveChannel, selectChannels, selectMessages } from './store/selectors/twitch-chat.selectors';
@@ -18,6 +18,7 @@ import { selectActiveChannel, selectChannels, selectMessages } from './store/sel
       <app-twitch-chat-selector [channels$]="channels$"
                                 [activeChannel$]="activeChannel$"
                                 (addChannel)="onAddChannel($event)"
+                                (removeChannel)="onRemoveChannel($event)"
                                 (changeChannel)="onChangeChannel($event)"></app-twitch-chat-selector>
 
       <div class="chat-container flex-fill overflow-scroll" (scroll)="scrolled()" #scrollframe>
@@ -72,6 +73,10 @@ export class TwitchChatComponent implements AfterViewInit {
   onAddChannel(channels: string): void {
     const channelToAdd = channels.split(' ');
     this.store.dispatch(addChannels(channelToAdd));
+  }
+
+  onRemoveChannel(channel: string): void {
+    this.store.dispatch(removeChannel(channel));
   }
 
   scrolled(): void {

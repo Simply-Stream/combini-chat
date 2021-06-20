@@ -20,6 +20,11 @@ export const addChannels = createAction(
   (channels: string[]) => ({channels}),
 );
 
+export const removeChannel = createAction(
+  '[Twitch Chat] Remove Channels',
+  (channel: string) => ({channel}),
+);
+
 export const addCombinedChatChannel = createAction(
   '[Twitch Chat] Add Combined Channel',
   (channel: string) => ({channel}),

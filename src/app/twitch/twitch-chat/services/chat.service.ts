@@ -74,6 +74,13 @@ export class ChatService {
   }
 
   /**
+   * @param channel
+   */
+  public part(channel: string): Promise<[string]> {
+    return this.twitch.part(channel);
+  }
+
+  /**
    * @param {string} channel
    * @param {string} message
    * @returns {Promise<[string]>}

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { DomSanitizer } from "@angular/platform-browser";
 import { Badge } from "app/twitch/twitch-chat/models/badge";
 import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/message';
 
@@ -26,7 +25,7 @@ import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/messa
           <span class="chat-message-user fw-bold"
                 [style]="{color: message.userstate?.color}">{{ message.userstate['display-name'] }}: </span>
           <span class="chat-message"
-                [innerHTML]="sanitizer.bypassSecurityTrustHtml((message |emote).message |linky:{stripPrefix: false, stripTrailingSlash: false, truncate: {length: 64}, className: 'chat-message-link'})"></span>
+                [innerHTML]="message.message |linky:{stripPrefix: false, stripTrailingSlash: false, truncate: {length: 64}, className: 'chat-message-link'} |emote:message |safeHtml"></span>
         </div>
       </div>
     </div>
@@ -42,9 +41,6 @@ export class TwitchChatMessageComponent implements OnInit {
 
   // @TODO: Refactor with ngOnInit bullshittery
   public parsedBadges: Badge[] = [];
-
-  constructor(public sanitizer: DomSanitizer) {
-  }
 
   public ngOnInit(): void {
     if (!this.message.userstate["badges-raw"]) {

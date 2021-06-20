@@ -14,8 +14,13 @@ import { Observable } from 'rxjs';
         </li>
 
         <li *ngFor="let channel of channels$ |async" class="nav-item">
-          <a (click)="onClick($event, channel)" class="nav-link" [class.active]="channel === (activeChannel$ |async)"
-             href="#">{{ channel }}</a>
+          <span (click)="onClick($event, channel)" class="nav-link"
+                [class.active]="channel === (activeChannel$ |async)">
+            {{ channel }}
+            <app-twitch-chat-selector-remove
+              [channelName]="channel"
+              (removeChannelSuccess)="onRemoveSuccess($event)"></app-twitch-chat-selector-remove>
+          </span>
         </li>
 
         <li class="nav-item"><a class="nav-link" href="#" (click)="onAdd($event)">+</a></li>
@@ -42,6 +47,9 @@ export class TwitchChatSelectorComponent {
   @Output()
   protected addChannel: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output()
+  protected removeChannel: EventEmitter<string> = new EventEmitter<string>();
+
   modalVisible = false;
 
   onClick($event: MouseEvent, channel: string): void {
@@ -62,5 +70,9 @@ export class TwitchChatSelectorComponent {
   onAddFailure(reason: string): void {
     this.modalVisible = false;
     console.log(reason);
+  }
+
+  onRemoveSuccess(channel: string): void {
+    this.removeChannel.emit(channel);
   }
 }

@@ -43,6 +43,13 @@ export class TwitchChatEffects {
     }),
   ), {dispatch: false});
 
+  removeChannel$ = createEffect(() => this.actions$.pipe(
+    ofType(TwitchChatActions.removeChannel),
+    tap(({channel}) => {
+      this.chatService.part(channel);
+    })
+  ), {dispatch: false});
+
   sendMessage$ = createEffect(() => this.actions$.pipe(
     ofType(TwitchChatActions.sendMessage),
     tap(({channel, message}) => {
