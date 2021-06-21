@@ -15,18 +15,18 @@ export class EmotePipe implements PipeTransform {
     this.parsers = [emoteParser, bttvParser];
   }
 
-  transform(message: Message): Message {
+  transform(message: string, messageObject: Message): string {
     const parsedMessage: Message = {
-      userstate: message.userstate,
-      message: message.message,
-      channel: message.channel,
-      background: message.background,
+      userstate: messageObject.userstate,
+      message,
+      channel: messageObject.channel,
+      background: messageObject.background
     };
 
     for (const parser of this.parsers) {
       parser.parse(parsedMessage);
     }
 
-    return parsedMessage;
+    return parsedMessage.message;
   }
 }

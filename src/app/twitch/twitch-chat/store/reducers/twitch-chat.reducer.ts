@@ -38,6 +38,14 @@ export const reducer = createReducer(
     }),
   ),
   on(
+    TwitchChatActions.removeChannel,
+    (state: State, {channel}) => ({
+      ...state,
+      channels: [...state.channels.filter(chan => chan !== channel)],
+      messages: [...state.messages.filter(message => message.channel !== '#' + channel)],
+    })
+  ),
+  on(
     TwitchChatActions.addCombinedChatChannel,
     (state: State, {channel}) => ({
       ...state,

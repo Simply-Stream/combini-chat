@@ -15,6 +15,7 @@ export class EmoteParserService implements EmoteParserInterface {
 
     if (message.userstate.emotes) {
       Object.keys(message.userstate.emotes).forEach((emoteId) => {
+        // @TODO: Parsing is partialy broken, especially when HTML entities are encoded
         const pos = message.userstate.emotes[emoteId][0].split('-');
 
         // @TODO: Actually use what twitch sends us and only override these parts

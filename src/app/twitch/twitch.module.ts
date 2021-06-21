@@ -25,6 +25,9 @@ import { TwitchChatSelectorComponent } from './twitch-chat/twitch-chat-selector/
 import { TwitchChatComponent } from './twitch-chat/twitch-chat.component';
 
 import { TwitchComponent } from './twitch.component';
+import { TwitchChatSelectorRemoveComponent } from './twitch-chat/twitch-chat-selector/twitch-chat-selector-remove/twitch-chat-selector-remove.component';
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { SafeHtmlPipe } from './twitch-chat/pipes/safe-html.pipe';
 
 const components = [
   TwitchComponent,
@@ -33,6 +36,7 @@ const components = [
   TwitchChatInputComponent,
   TwitchChatSelectorComponent,
   TwitchChatSelectorAddComponent,
+  TwitchChatSelectorRemoveComponent,
   TwitchAuthenticationComponent,
   TwitchChatBadgeComponent,
 ];
@@ -40,6 +44,7 @@ const components = [
 const pipes = [
   ChannelSelectPipe,
   EmotePipe,
+  SafeHtmlPipe,
 ];
 
 @NgModule({
@@ -57,6 +62,7 @@ const pipes = [
     RouterModule,
     OAuthModule.forRoot(),
     LinkyModule,
+    FontAwesomeModule,
   ],
   exports: [
     TwitchComponent,
