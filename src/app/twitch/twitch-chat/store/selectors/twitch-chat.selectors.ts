@@ -1,14 +1,14 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/message';
 import * as fromTwitchChat from '../reducers/twitch-chat.reducer';
-import { Message } from '../../twitch-chat-message/message';
 
 export const selectTwitchChatState = createFeatureSelector<fromTwitchChat.State>(
   fromTwitchChat.twitchChatFeatureKey,
 );
 
-export const selectActiveChannel = createSelector(
+export const selectActiveChannels = createSelector(
   selectTwitchChatState,
-  (state: fromTwitchChat.State) => state.activeChannel,
+  (state: fromTwitchChat.State) => state.activeChannels,
 );
 
 export const selectMessages = createSelector(

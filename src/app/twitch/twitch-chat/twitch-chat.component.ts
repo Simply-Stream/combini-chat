@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { Message } from './twitch-chat-message/message';
-import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
+import { BadgesService } from "app/twitch/twitch-chat/services/badges.service";
+import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/message';
+import { Observable } from 'rxjs';
+import { addChannels, changeChannel, connect, removeChannel } from './store/actions/twitch-chat.actions';
 
 import * as fromTwitchChat from './store/reducers/twitch-chat.reducer';
-import { selectActiveChannel, selectChannels, selectMessages } from './store/selectors/twitch-chat.selectors';
-import { addChannels, changeChannel, connect } from './store/actions/twitch-chat.actions';
+import { selectActiveChannels, selectChannels, selectMessages } from './store/selectors/twitch-chat.selectors';
 
 @Component({
   selector: 'app-twitch-chat',
@@ -14,16 +15,21 @@ import { addChannels, changeChannel, connect } from './store/actions/twitch-chat
       <div class="chat-header text-center">
         <h5 class="mb-0">Stream-Chat</h5>
       </div>
-      <app-twitch-chat-selector [channels$]="channels$"
-                                [activeChannel$]="activeChannel$"
+      <app-twitch-chat-selector [channels]="allChannels$ |async"
+                                [activeChannels]="activeChannels$ |async"
                                 (addChannel)="onAddChannel($event)"
+                                (removeChannel)="onRemoveChannel($event)"
                                 (changeChannel)="onChangeChannel($event)"></app-twitch-chat-selector>
 
       <div class="chat-container flex-fill overflow-scroll" (scroll)="scrolled()" #scrollframe>
         <!-- @TODO: @see https://angular.io/guide/dynamic-component-loader and replace ngFor? -->
+        <!--
+        @TODO: This needs to be replaced by a faster method, like simply appending to the dom without re-rendering
+               everything before
+        -->
         <ng-container
-          *ngFor="let message of (allChat$ |async) |channelSelect:getActiveChannel(activeChannel$ |async, channels$ |async); index as i">
-          <app-twitch-chat-message [message]="message"></app-twitch-chat-message>
+          *ngFor="let message of (allChat$ |async) |channelSelect:getActiveChannel(activeChannels$ |async, allChannels$ |async); index as i">
+          <app-twitch-chat-message [message]="message" [badges]="badges.getBadges()"></app-twitch-chat-message>
         </ng-container>
       </div>
 
@@ -39,14 +45,13 @@ export class TwitchChatComponent implements AfterViewInit {
   @ViewChild('scrollframe', {static: false}) scrollFrame: ElementRef;
 
   public allChat$: Observable<Message[] | []> = this.store.pipe(select(selectMessages));
-  public channels$: Observable<string[]> = this.store.pipe(select(selectChannels));
-  public activeChannel$: Observable<string> = this.store.pipe(select(selectActiveChannel));
-
+  public allChannels$: Observable<string[]> = this.store.pipe(select(selectChannels));
+  public activeChannels$: Observable<string[]> = this.store.pipe(select(selectActiveChannels));
   private scrollContainer: any;
   private mutationObserver: MutationObserver;
   private isNearBottom = true;
 
-  constructor(private store: Store<fromTwitchChat.State>) {
+  constructor(private store: Store<fromTwitchChat.State>, public badges: BadgesService) {
     this.store.dispatch(connect());
   }
 
@@ -61,13 +66,17 @@ export class TwitchChatComponent implements AfterViewInit {
     this.mutationObserver.observe(this.scrollContainer, {childList: true});
   }
 
-  onChangeChannel(channel: string): void {
-    this.store.dispatch(changeChannel(channel));
+  onChangeChannel(channels: string[]): void {
+    this.store.dispatch(changeChannel(channels));
   }
 
   onAddChannel(channels: string): void {
     const channelToAdd = channels.split(' ');
     this.store.dispatch(addChannels(channelToAdd));
+  }
+
+  onRemoveChannel(channel: string): void {
+    this.store.dispatch(removeChannel(channel));
   }
 
   scrolled(): void {
@@ -90,11 +99,11 @@ export class TwitchChatComponent implements AfterViewInit {
     return position > height - threshold;
   }
 
-  getActiveChannel(channels: string | null, allChannels?: string[]): string[] {
-    if (channels === 'combined') {
+  getActiveChannel(channels: string [] | null, allChannels?: string[]): string[] {
+    if (channels === allChannels) {
       return allChannels;
     }
 
-    return [channels];
+    return channels;
   }
 }

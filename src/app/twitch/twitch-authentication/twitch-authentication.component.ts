@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import * as fromTwitchAuthentication from './store/reducers/twitch-authentication.reducer';
-import { selectIsLoggedIn, selectUsername } from './store/selectors/twitch-authentication.selectors';
 import { Observable } from 'rxjs';
 import { checkLogin, login, logout } from './store/actions/twitch-authentication.actions';
+import * as fromTwitchAuthentication from './store/reducers/twitch-authentication.reducer';
+import { selectIsLoggedIn, selectUsername } from './store/selectors/twitch-authentication.selectors';
 
 @Component({
   selector: 'app-twitch-authentication',
@@ -13,7 +13,7 @@ import { checkLogin, login, logout } from './store/actions/twitch-authentication
     </div>
 
     <ng-template #loginButton>
-      <button class="btn btn-twitch-primary" (click)="onLogin()">{{ 'AUTH.LOGIN' |translate }}</button>
+      <app-twitch-button (clickAction)="onLogin()" [label]="'AUTH.LOGIN' |translate"></app-twitch-button>
     </ng-template>
   `,
   styleUrls: ['./twitch-authentication.component.scss'],

@@ -11,6 +11,7 @@
         "SAVE": "Save"
       }
     },
+    "SEND_MESSAGE": "Chat",
     "SEND_MESSAGE_TEXTAREA": "Send a message",
     "COMBINED": "Combined"
   }

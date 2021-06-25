@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-twitch-chat-selector',
@@ -7,15 +6,22 @@ import { Observable } from 'rxjs';
     <div class="chat-selector-tabs">
       <ul class="nav nav-tabs">
         <li class="nav-item">
+          <!-- @TODO: Replace 'isCombined' method by something that does not called that often -->
           <a class="nav-link"
-             (click)="onClick($event, 'combined')"
-             [class.active]="(activeChannel$|async) === 'combined'"
+             (click)="onClick($event, channels)"
+             [class.active]="isCombined(channels, activeChannels) && activeChannels.length"
              href="#">{{ 'CHAT.COMBINED' |translate }}</a>
         </li>
 
-        <li *ngFor="let channel of channels$ |async" class="nav-item">
-          <a (click)="onClick($event, channel)" class="nav-link" [class.active]="channel === (activeChannel$ |async)"
-             href="#">{{ channel }}</a>
+        <li *ngFor="let channel of channels" class="nav-item">
+          <!-- @TODO: Replace 'isCombined' method by something that does not called that often -->
+          <span (click)="onClick($event, [channel])" class="nav-link"
+                [class.active]="!isCombined(channels, activeChannels) && activeChannels.indexOf(channel) >= 0">
+            {{ channel }}
+            <app-twitch-chat-selector-remove
+              [channelName]="channel"
+              (removeChannelSuccess)="onRemoveSuccess($event)"></app-twitch-chat-selector-remove>
+          </span>
         </li>
 
         <li class="nav-item"><a class="nav-link" href="#" (click)="onAdd($event)">+</a></li>
@@ -31,22 +37,25 @@ import { Observable } from 'rxjs';
 })
 export class TwitchChatSelectorComponent {
   @Input()
-  public activeChannel$: Observable<string>;
+  public activeChannels: string[] | null;
 
   @Input()
-  public channels$: Observable<string[]>;
+  public channels: string[];
 
   @Output()
-  protected changeChannel: EventEmitter<string> = new EventEmitter<string>();
+  protected changeChannel: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   @Output()
   protected addChannel: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output()
+  protected removeChannel: EventEmitter<string> = new EventEmitter<string>();
+
   modalVisible = false;
 
-  onClick($event: MouseEvent, channel: string): void {
+  onClick($event: MouseEvent, channels: string[]): void {
     $event.preventDefault();
-    this.changeChannel.emit(channel);
+    this.changeChannel.emit(channels);
   }
 
   onAdd($event: MouseEvent): void {
@@ -62,5 +71,19 @@ export class TwitchChatSelectorComponent {
   onAddFailure(reason: string): void {
     this.modalVisible = false;
     console.log(reason);
+  }
+
+  onRemoveSuccess(channel: string): void {
+    this.removeChannel.emit(channel);
+  }
+
+  isCombined(channels: string[], activeChannels: string[]): boolean {
+    for (const channel of channels) {
+      if (activeChannels.indexOf(channel) < 0) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }
