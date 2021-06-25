@@ -50,7 +50,7 @@ export class ChatService {
           userstate,
           message: this.htmlSanitizer.sanitize(message),
           // @TODO: Remove the background-alternation from this property
-          background: (self ? 'self' : ((this.alternatingToggle = !this.alternatingToggle) ? 'alternate' : null)),
+          background: ((this.alternatingToggle = !this.alternatingToggle) ? 'alternate' : null),
         }));
 
         if (callback) {
