@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { addChannels, changeChannel, connect, removeChannel } from './store/actions/twitch-chat.actions';
 
 import * as fromTwitchChat from './store/reducers/twitch-chat.reducer';
-import { selectActiveChannel, selectChannels, selectMessages } from './store/selectors/twitch-chat.selectors';
+import { selectActiveChannels, selectChannels, selectMessages } from './store/selectors/twitch-chat.selectors';
 
 @Component({
   selector: 'app-twitch-chat',
@@ -15,8 +15,8 @@ import { selectActiveChannel, selectChannels, selectMessages } from './store/sel
       <div class="chat-header text-center">
         <h5 class="mb-0">Stream-Chat</h5>
       </div>
-      <app-twitch-chat-selector [channels$]="channels$"
-                                [activeChannel$]="activeChannel$"
+      <app-twitch-chat-selector [channels]="allChannels$ |async"
+                                [activeChannels]="activeChannels$ |async"
                                 (addChannel)="onAddChannel($event)"
                                 (removeChannel)="onRemoveChannel($event)"
                                 (changeChannel)="onChangeChannel($event)"></app-twitch-chat-selector>
@@ -28,7 +28,7 @@ import { selectActiveChannel, selectChannels, selectMessages } from './store/sel
                everything before
         -->
         <ng-container
-          *ngFor="let message of (allChat$ |async) |channelSelect:getActiveChannel(activeChannel$ |async, channels$ |async); index as i">
+          *ngFor="let message of (allChat$ |async) |channelSelect:getActiveChannel(activeChannels$ |async, allChannels$ |async); index as i">
           <app-twitch-chat-message [message]="message" [badges]="badges.getBadges()"></app-twitch-chat-message>
         </ng-container>
       </div>
@@ -45,8 +45,8 @@ export class TwitchChatComponent implements AfterViewInit {
   @ViewChild('scrollframe', {static: false}) scrollFrame: ElementRef;
 
   public allChat$: Observable<Message[] | []> = this.store.pipe(select(selectMessages));
-  public channels$: Observable<string[]> = this.store.pipe(select(selectChannels));
-  public activeChannel$: Observable<string> = this.store.pipe(select(selectActiveChannel));
+  public allChannels$: Observable<string[]> = this.store.pipe(select(selectChannels));
+  public activeChannels$: Observable<string[]> = this.store.pipe(select(selectActiveChannels));
   private scrollContainer: any;
   private mutationObserver: MutationObserver;
   private isNearBottom = true;
@@ -66,8 +66,8 @@ export class TwitchChatComponent implements AfterViewInit {
     this.mutationObserver.observe(this.scrollContainer, {childList: true});
   }
 
-  onChangeChannel(channel: string): void {
-    this.store.dispatch(changeChannel(channel));
+  onChangeChannel(channels: string[]): void {
+    this.store.dispatch(changeChannel(channels));
   }
 
   onAddChannel(channels: string): void {
@@ -99,11 +99,11 @@ export class TwitchChatComponent implements AfterViewInit {
     return position > height - threshold;
   }
 
-  getActiveChannel(channels: string | null, allChannels?: string[]): string[] {
-    if (channels === 'combined') {
+  getActiveChannel(channels: string [] | null, allChannels?: string[]): string[] {
+    if (channels === allChannels) {
       return allChannels;
     }
 
-    return [channels];
+    return channels;
   }
 }

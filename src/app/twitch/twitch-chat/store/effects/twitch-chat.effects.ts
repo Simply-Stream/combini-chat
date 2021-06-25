@@ -11,7 +11,7 @@ import { BttvEmoteService } from '../../services/bttv-emote.service';
 import * as TwitchChatActions from '../actions/twitch-chat.actions';
 import { connectSuccess } from '../actions/twitch-chat.actions';
 import { State } from '../reducers/twitch-chat.reducer';
-import { selectChannels } from '../selectors/twitch-chat.selectors';
+import { selectActiveChannels, selectChannels } from '../selectors/twitch-chat.selectors';
 
 @Injectable()
 export class TwitchChatEffects {
@@ -53,8 +53,11 @@ export class TwitchChatEffects {
 
   sendMessage$ = createEffect(() => this.actions$.pipe(
     ofType(TwitchChatActions.sendMessage),
-    tap(({channel, message}) => {
-      this.chatService.sendMessage(channel, message);
+    withLatestFrom(this.store.pipe(select(selectActiveChannels))),
+    tap(([action, latest]) => {
+      latest.forEach(channel => {
+        this.chatService.sendMessage(channel, action.message);
+      });
     }),
   ), {dispatch: false});
 

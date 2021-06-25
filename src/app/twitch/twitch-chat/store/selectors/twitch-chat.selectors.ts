@@ -6,9 +6,9 @@ export const selectTwitchChatState = createFeatureSelector<fromTwitchChat.State>
   fromTwitchChat.twitchChatFeatureKey,
 );
 
-export const selectActiveChannel = createSelector(
+export const selectActiveChannels = createSelector(
   selectTwitchChatState,
-  (state: fromTwitchChat.State) => state.activeChannel,
+  (state: fromTwitchChat.State) => state.activeChannels,
 );
 
 export const selectMessages = createSelector(

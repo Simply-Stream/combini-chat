@@ -32,7 +32,7 @@ export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionRedu
       {
         [fromTwitchChat.twitchChatFeatureKey]: {
           serialize: state => ({
-            'activeChannel': state.activeChannel,
+            'activeChannels': state.activeChannels,
             'combinedChatChannels': state.combinedChatChannels,
             'channels': state.channels,
             'messages': [],
