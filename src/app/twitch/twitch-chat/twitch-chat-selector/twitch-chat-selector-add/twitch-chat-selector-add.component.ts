@@ -12,7 +12,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
           </div>
           <div class="modal-body">
             <div class="input-group mb-3">
-              <input [value]="channelToAdd" (input)="channelToAdd = $event.target.value" type="text"
+              <input [(ngModel)]="channelToAdd" type="text"
+                     (keyup.enter)="onChannelAddSuccess()"
+                     (keyup.escape)="onChannelAddFailure('canceled')"
                      class="form-control channel-add-input" [placeholder]="'CHAT.CHANNEL.ADD.ENTER' |translate">
             </div>
           </div>

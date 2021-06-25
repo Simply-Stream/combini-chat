@@ -1,5 +1,6 @@
 @import "../../../variables";
 
-a {
+.btn-twitch-primary {
+  background: $twitch-purple;
   color: $chat-color-input;
 }

@@ -5,18 +5,15 @@ import * as TwitchChatActions from '../actions/twitch-chat.actions';
 export const twitchChatFeatureKey = 'twitchChat';
 
 export interface State {
-  activeChannel: string,
-  // Channel that are combined to a super-chat. Needs to be present in `channels` array
-  combinedChatChannels: string[] | [],
+  activeChannels: string[],
   // Active tracked channel
-  channels: string[] | [],
+  channels: string[],
   // Tracked messages, per channel
   messages: Message[],
 }
 
 export const initialState: State = {
-  activeChannel: 'combined',
-  combinedChatChannels: [],
+  activeChannels: [],
   channels: [],
   messages: [],
 };
@@ -35,6 +32,7 @@ export const reducer = createReducer(
     (state: State, {channels}) => ({
       ...state,
       channels: [...state.channels, ...channels],
+      activeChannels: [...state.activeChannels, ...channels]
     }),
   ),
   on(
@@ -42,14 +40,8 @@ export const reducer = createReducer(
     (state: State, {channel}) => ({
       ...state,
       channels: [...state.channels.filter(chan => chan !== channel)],
+      activeChannels: [...state.activeChannels.filter(chan => chan !== channel)],
       messages: [...state.messages.filter(message => message.channel !== '#' + channel)],
-    })
-  ),
-  on(
-    TwitchChatActions.addCombinedChatChannel,
-    (state: State, {channel}) => ({
-      ...state,
-      combinedChannel: [...state.combinedChatChannels, channel],
     }),
   ),
   on(
@@ -62,10 +54,11 @@ export const reducer = createReducer(
   ),
   on(
     TwitchChatActions.changeChannel,
-    (state: State, {channel}) =>
-      ({
+    (state: State, {channels}) => {
+      return ({
         ...state,
-        activeChannel: channel,
-      }),
+        activeChannels: [...channels],
+      });
+    },
   ),
 );

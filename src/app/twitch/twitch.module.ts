@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from "@angular/forms";
 import { RouterModule } from '@angular/router';
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,7 +13,9 @@ import * as fromTwitch from '../reducers';
 import { TwitchAuthenticationEffects } from './twitch-authentication/store/effects/twitch-authentication.effects';
 import * as fromTwitchAuth from './twitch-authentication/store/reducers/twitch-authentication.reducer';
 import { TwitchAuthenticationComponent } from './twitch-authentication/twitch-authentication.component';
+import { TwitchButtonComponent } from './twitch-button/twitch-button.component';
 import { EmotePipe } from './twitch-chat/pipes/emote.pipe';
+import { SafeHtmlPipe } from './twitch-chat/pipes/safe-html.pipe';
 
 import { TwitchChatEffects } from './twitch-chat/store/effects/twitch-chat.effects';
 import * as fromTwitchChat from './twitch-chat/store/reducers/twitch-chat.reducer';
@@ -21,13 +25,11 @@ import { TwitchChatMessageComponent } from './twitch-chat/twitch-chat-message/tw
 
 import { ChannelSelectPipe } from './twitch-chat/twitch-chat-selector/pipes/channel-select.pipe';
 import { TwitchChatSelectorAddComponent } from './twitch-chat/twitch-chat-selector/twitch-chat-selector-add/twitch-chat-selector-add.component';
+import { TwitchChatSelectorRemoveComponent } from './twitch-chat/twitch-chat-selector/twitch-chat-selector-remove/twitch-chat-selector-remove.component';
 import { TwitchChatSelectorComponent } from './twitch-chat/twitch-chat-selector/twitch-chat-selector.component';
 import { TwitchChatComponent } from './twitch-chat/twitch-chat.component';
 
 import { TwitchComponent } from './twitch.component';
-import { TwitchChatSelectorRemoveComponent } from './twitch-chat/twitch-chat-selector/twitch-chat-selector-remove/twitch-chat-selector-remove.component';
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { SafeHtmlPipe } from './twitch-chat/pipes/safe-html.pipe';
 
 const components = [
   TwitchComponent,
@@ -39,6 +41,7 @@ const components = [
   TwitchChatSelectorRemoveComponent,
   TwitchAuthenticationComponent,
   TwitchChatBadgeComponent,
+  TwitchButtonComponent,
 ];
 
 const pipes = [
@@ -63,6 +66,7 @@ const pipes = [
     OAuthModule.forRoot(),
     LinkyModule,
     FontAwesomeModule,
+    FormsModule,
   ],
   exports: [
     TwitchComponent,
