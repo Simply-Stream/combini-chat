@@ -27,14 +27,16 @@
     "ng": "ng",
     "start": "npm-run-all -p electron:serve ng:serve",
     "start:forge": "electron-forge start",
-    "build": "npm run electron:serve-tsc && ng build --base-href ./",
+    "build": "npm run electron:serve-tsc && ng build --base-href /",
+    "build:app": "npm run electron:serve-tsc && ng build --base-href ./",
     "build:dev": "npm run build -- -c dev",
     "build:prod": "npm run build -- -c production",
+    "build:app:prod": "npm run build:app -- -c app",
     "ng:serve": "ng serve -c web",
     "electron:serve-tsc": "tsc -p tsconfig.serve.json",
     "electron:serve": "wait-on tcp:4200 && npm run electron:serve-tsc && npx electron . --serve",
     "electron:local": "npm run build:prod && npx electron .",
-    "electron:build": "npm run build:prod && electron-builder build --publish=never",
+    "electron:build": "npm run build:app:prod && electron-builder build --publish=never",
     "test": "ng test --watch=false",
     "test:watch": "ng test",
     "e2e": "npm run build:prod && cross-env TS_NODE_PROJECT='e2e/tsconfig.e2e.json' mocha --timeout 300000 --require ts-node/register e2e/**/*.e2e.ts",
@@ -45,7 +47,7 @@
   },
   "dependencies": {
     "@electron/remote": "1.0.4",
-    "electron-builder": "22.10.5"
+    "electron-squirrel-startup": "1.0.0"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "11.1.1",
@@ -97,8 +99,8 @@
     "core-js": "3.6.5",
     "cross-env": "7.0.3",
     "electron": "12.0.2",
+    "electron-builder": "22.10.5",
     "electron-reload": "1.5.0",
-    "electron-squirrel-startup": "1.0.0",
     "eslint": "7.22.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "31.6.1",

@@ -2,6 +2,7 @@ export const AppConfig = {
   production: true,
   environment: 'PROD',
   twitch: {
+    redirectUrl: 'https://chat.simply-stream.com/callback',
     endpoints: {
       badges: {
         global: 'https://badges.twitch.tv/v1/badges/global/display',

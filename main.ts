@@ -31,9 +31,8 @@ function createWindow(): BrowserWindow {
 
   if (serve) {
     win.webContents.openDevTools();
-
     require('electron-reload')(__dirname, {
-      electron: require(`${__dirname}/node_modules/electron`),
+      electron: require(`${ __dirname }/node_modules/electron`),
     });
     win.loadURL('http://localhost:4200');
   } else {
@@ -42,6 +41,24 @@ function createWindow(): BrowserWindow {
       protocol: 'file:',
       slashes: true,
     }));
+
+    win.webContents.on('did-fail-load', () =>
+      win.loadURL(url.format({
+        pathname: path.join(__dirname, 'dist/index.html'),
+        protocol: 'file:',
+        slashes: true,
+      })),
+    );
+
+    win.webContents.on('will-navigate', (event, url) => {
+      // @TODO: Open new window on external requests? Ignore external requests?
+    });
+
+    win.webContents.on('will-redirect', (event, url) => {
+      // @see https://offering.solutions/blog/articles/2020/10/06/securing-an-electron-app-implemented-with-angular-using-oidc-and-oauth2/
+      win.webContents.send('redirectEvent', url);
+      event.preventDefault();
+    });
   }
 
   // Emitted when the window is closed.
@@ -79,6 +96,7 @@ try {
     }
   });
 
+  app.setAsDefaultProtocolClient('combini');
 } catch (e) {
   // Catch Error
   // throw e;
