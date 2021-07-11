@@ -29,21 +29,24 @@ export const reducer = createReducer(
   ),
   on(
     TwitchChatActions.addChannels,
-    (state: State, {channels}) => ({
-      ...state,
-      channels: [...state.channels, ...channels],
-      activeChannels: [...state.activeChannels, ...channels]
-    }),
+    (state: State, {channels}) =>
+      ({
+        ...state,
+        channels: [...state.channels, ...channels],
+        activeChannels: [...state.activeChannels, ...channels],
+      }),
   ),
   on(
     TwitchChatActions.removeChannel,
-    (state: State, {channel}) => ({
-      ...state,
-      channels: [...state.channels.filter(chan => chan !== channel)],
-      activeChannels: [...state.activeChannels.filter(chan => chan !== channel)],
-      messages: [...state.messages.filter(message => message.channel !== '#' + channel)],
-    }),
+    (state: State, {channel}) =>
+      ({
+        ...state,
+        channels: [...state.channels.filter(chan => chan !== channel)],
+        activeChannels: [...state.activeChannels.filter(chan => chan !== channel)],
+        messages: [...state.messages.filter(message => message.channel !== '#' + channel)],
+      }),
   ),
+
   on(
     TwitchChatActions.addMessage,
     (state: State, {message}) =>
@@ -54,11 +57,10 @@ export const reducer = createReducer(
   ),
   on(
     TwitchChatActions.changeChannel,
-    (state: State, {channels}) => {
-      return ({
+    (state: State, {channels}) =>
+      ({
         ...state,
         activeChannels: [...channels],
-      });
-    },
+      }),
   ),
 );

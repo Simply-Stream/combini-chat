@@ -2,6 +2,7 @@ export const AppConfig = {
   production: false,
   environment: 'LOCAL',
   twitch: {
+    redirectUrl: 'http://localhost:4200/callback',
     endpoints: {
       badges: {
         global: 'https://badges.twitch.tv/v1/badges/global/display',
