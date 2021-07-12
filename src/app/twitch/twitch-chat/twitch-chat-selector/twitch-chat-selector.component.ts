@@ -25,7 +25,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
           </span>
         </li>
 
-        <li class="nav-item"><a class="channel-selector-link nav-link" href="#" (click)="onAdd($event)">+</a></li>
+        <li class="nav-item"><a class="channel-selector-link nav-link" href="#" (click)="onAdd($event)">
+          <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+        </a></li>
       </ul>
 
       <app-twitch-chat-selector-add [visible]="modalVisible"

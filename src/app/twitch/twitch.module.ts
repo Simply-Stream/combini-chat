@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
-import { fas, faSmile, faTimes } from "@fortawesome/free-solid-svg-icons";
+import * as faSolidIcons from "@fortawesome/free-solid-svg-icons";
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,6 +23,7 @@ import { SafeHtmlPipe } from './twitch-chat/pipes/safe-html.pipe';
 import { TwitchChatEffects } from './twitch-chat/store/effects/twitch-chat.effects';
 import * as fromTwitchChat from './twitch-chat/store/reducers/twitch-chat.reducer';
 import { TwitchChatBadgeComponent } from './twitch-chat/twitch-chat-badge/twitch-chat-badge.component';
+import { TwitchChatEmoteMenuComponent } from './twitch-chat/twitch-chat-emote-menu/twitch-chat-emote-menu.component';
 import { TwitchChatInputComponent } from './twitch-chat/twitch-chat-input/twitch-chat-input.component';
 import { TwitchChatMessageComponent } from './twitch-chat/twitch-chat-message/twitch-chat-message.component';
 
@@ -33,7 +34,6 @@ import { TwitchChatSelectorComponent } from './twitch-chat/twitch-chat-selector/
 import { TwitchChatComponent } from './twitch-chat/twitch-chat.component';
 
 import { TwitchComponent } from './twitch.component';
-import { TwitchChatEmoteMenuComponent } from './twitch-chat/twitch-chat-emote-menu/twitch-chat-emote-menu.component';
 
 const components = [
   TwitchComponent,
@@ -79,7 +79,7 @@ const pipes = [
 })
 export class TwitchModule {
   constructor(private faLibrary: FaIconLibrary) {
-    this.faLibrary.addIcons(faSmile, faTimes);
-    this.faLibrary.addIconPacks(far, fas, fab);
+    this.faLibrary.addIcons(faSolidIcons.faSmile, faSolidIcons.faTimes, faSolidIcons.faPlus);
+    this.faLibrary.addIconPacks(far, faSolidIcons.fas, fab);
   }
 }
