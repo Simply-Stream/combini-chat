@@ -19,14 +19,18 @@ $chat-input-background-color: #fff3;
 // Link colors
 $chat-link-normal: #a970ff;
 $chat-link-hover: $chat-link-normal;
-$chat-link-hover-background: hsla(0, 0%, 100%, 0.2);
+$chat-link-hover-background: hsla(0, 0%, 100%, .2);
 $chat-link-hover-background-radius: 0.4rem;
 
 // Border
-$border-primary-color: rgba(255, 255, 255, 0.1);
+$border-primary-color: rgba(255, 255, 255, .1);
 $border-primary-width: 1px;
 $border-primary-style: solid;
 $border-primary: $border-primary-color $border-primary-width $border-primary-style;
 
-$border-chat-input-color: rgba(255, 255, 255, 0.2);
+$border-chat-input-color: rgba(255, 255, 255, .2);
 $border-chat: $border-chat-input-color $border-primary-width $border-primary-style;
+
+// Buttons
+$button-background-primary: $twitch-purple;
+$button-background-disabled: rgba(255, 255, 255, .149);

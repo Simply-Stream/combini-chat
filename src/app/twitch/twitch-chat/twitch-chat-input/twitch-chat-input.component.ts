@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from "@ngrx/store";
+import { TwitchAuthenticationService } from "app/twitch/twitch-authentication/serivces/twitch-authentication.service";
 import { sendMessage } from "app/twitch/twitch-chat/store/actions/twitch-chat.actions";
 import * as fromTwitchChat from "app/twitch/twitch-chat/store/reducers/twitch-chat.reducer";
 
@@ -15,15 +16,16 @@ import * as fromTwitchChat from "app/twitch/twitch-chat/store/reducers/twitch-ch
         <app-twitch-chat-emote-menu></app-twitch-chat-emote-menu>
       </div>
     </div>
-    <app-twitch-button (clickAction)="onSendMessage()" position="end"
-                       [label]="'CHAT.SEND_MESSAGE' |translate"></app-twitch-button>
+
+    <app-twitch-button [label]="'CHAT.SEND_MESSAGE' |translate" [disabled]="!isLoggedIn()"
+                       (clickAction)="onSendMessage()" position="end"></app-twitch-button>
   `,
   styleUrls: ['./twitch-chat-input.component.scss'],
 })
 export class TwitchChatInputComponent {
   public textMessage;
 
-  constructor(private store: Store<fromTwitchChat.State>) {
+  constructor(private store: Store<fromTwitchChat.State>, private auth: TwitchAuthenticationService) {
   }
 
   onSendMessage(): void {
@@ -33,5 +35,9 @@ export class TwitchChatInputComponent {
 
     this.store.dispatch(sendMessage(this.textMessage));
     this.textMessage = '';
+  }
+
+  isLoggedIn(): boolean {
+    return this.auth.isLoggedIn;
   }
 }

@@ -7,15 +7,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       <ul class="nav nav-tabs">
         <li class="nav-item">
           <!-- @TODO: Replace 'isCombined' method by something that does not called that often -->
-          <a class="nav-link"
-             (click)="onClick($event, channels)"
-             [class.active]="isCombined(channels, activeChannels) && activeChannels.length"
-             href="#">{{ 'CHAT.COMBINED' |translate }}</a>
+          <span class="channel-selector-link nav-link"
+                (click)="onClick($event, channels)"
+                [class.active]="isCombined(channels, activeChannels) && activeChannels.length">
+            {{ 'CHAT.COMBINED' |translate }}
+          </span>
         </li>
 
         <li *ngFor="let channel of channels" class="nav-item">
           <!-- @TODO: Replace 'isCombined' method by something that does not called that often -->
-          <span (click)="onClick($event, [channel])" class="nav-link"
+          <span (click)="onClick($event, [channel])" class="channel-selector-link nav-link"
                 [class.active]="!isCombined(channels, activeChannels) && activeChannels.indexOf(channel) >= 0">
             {{ channel }}
             <app-twitch-chat-selector-remove
@@ -24,7 +25,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
           </span>
         </li>
 
-        <li class="nav-item"><a class="nav-link" href="#" (click)="onAdd($event)">+</a></li>
+        <li class="nav-item"><a class="channel-selector-link nav-link" href="#" (click)="onAdd($event)">+</a></li>
       </ul>
 
       <app-twitch-chat-selector-add [visible]="modalVisible"

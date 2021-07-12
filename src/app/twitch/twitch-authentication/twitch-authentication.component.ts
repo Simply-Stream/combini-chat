@@ -13,7 +13,7 @@ import { selectIsLoggedIn, selectUsername } from './store/selectors/twitch-authe
     </div>
 
     <ng-template #loginButton>
-      <app-twitch-button (clickAction)="onLogin()" [label]="'AUTH.LOGIN' |translate"></app-twitch-button>
+      <app-twitch-button [icon]="['fab', 'twitch']" (clickAction)="onLogin()" [label]="'AUTH.LOGIN' |translate"></app-twitch-button>
     </ng-template>
   `,
   styleUrls: ['./twitch-authentication.component.scss'],

@@ -1,6 +1,15 @@
 @import "../../../variables";
 
 .btn-twitch-primary {
-  background: $twitch-purple;
+  background: $button-background-primary;
   color: $chat-color-input;
+}
+
+.btn-twitch-disabled {
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }
+
+  background: $button-background-disabled;
 }
