@@ -1,0 +1,15 @@
+@import "../../../../variables";
+
+.twitch-emote-menu-trigger {
+  &:hover {
+    background: $chat-link-hover-background;
+  }
+
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  height: 100%;
+
+  font-size: 1rem;
+}

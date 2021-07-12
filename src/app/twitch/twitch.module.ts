@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from '@angular/router';
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fas, faSmile, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
@@ -30,6 +33,7 @@ import { TwitchChatSelectorComponent } from './twitch-chat/twitch-chat-selector/
 import { TwitchChatComponent } from './twitch-chat/twitch-chat.component';
 
 import { TwitchComponent } from './twitch.component';
+import { TwitchChatEmoteMenuComponent } from './twitch-chat/twitch-chat-emote-menu/twitch-chat-emote-menu.component';
 
 const components = [
   TwitchComponent,
@@ -54,6 +58,7 @@ const pipes = [
   declarations: [
     ...components,
     ...pipes,
+    TwitchChatEmoteMenuComponent,
   ],
   imports: [
     CommonModule,
@@ -73,4 +78,8 @@ const pipes = [
   ],
 })
 export class TwitchModule {
+  constructor(private faLibrary: FaIconLibrary) {
+    this.faLibrary.addIcons(faSmile, faTimes);
+    this.faLibrary.addIconPacks(far, fas, fab);
+  }
 }

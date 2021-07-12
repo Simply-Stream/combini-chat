@@ -4,7 +4,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-twitch-chat-selector-remove',
   template: `
-    <fa-icon (click)="removeChannel()" [icon]="faTimes"></fa-icon>
+    <fa-icon (click)="removeChannel()" [icon]="['fas', 'times']"></fa-icon>
   `,
   styleUrls: ['./twitch-chat-selector-remove.component.scss']
 })

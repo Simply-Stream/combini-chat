@@ -70,7 +70,6 @@ export class TwitchChatSelectorComponent {
 
   onAddFailure(reason: string): void {
     this.modalVisible = false;
-    console.log(reason);
   }
 
   onRemoveSuccess(channel: string): void {

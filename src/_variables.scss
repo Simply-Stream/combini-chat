@@ -11,7 +11,7 @@ $chat-font-size: .9rem;
 
 // Chat colors
 $chat-color-primary: #18181b;
-$chat-color-input: #efeff1;
+$chat-color-input: rgb(239, 239, 241);
 $chat-color-highlight-self: #ff00004d;
 $chat-color-alternating: color.adjust($color-nights, $alpha: -.7);
 $chat-input-background-color: #fff3;
