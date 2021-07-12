@@ -8,9 +8,10 @@ import * as fromTwitchChat from "app/twitch/twitch-chat/store/reducers/twitch-ch
   selector: 'app-twitch-chat-input',
   template: `
     <div class="start-0 my-3 chat-input-wrapper">
-      <textarea class="chat-input form-control" rows="1"
+      <textarea class="chat-input form-control" rows="1" maxlength="500"
                 [placeholder]="'CHAT.SEND_MESSAGE_TEXTAREA' | translate"
-                maxlength="500" [(ngModel)]="textMessage" (keyup.enter)="onSendMessage()">
+                [disabled]="!isLoggedIn()"
+                [(ngModel)]="textMessage" (keyup.enter)="onSendMessage()">
       </textarea>
       <div class="twitch-chat-button-panel">
         <app-twitch-chat-emote-menu></app-twitch-chat-emote-menu>
