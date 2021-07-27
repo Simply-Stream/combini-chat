@@ -52,6 +52,7 @@ export class TwitchChatComponent implements AfterViewInit {
   private isNearBottom = true;
 
   constructor(private store: Store<fromTwitchChat.State>, public badges: BadgesService) {
+    // @TODO: Abort connect when user has been logged in or maybe after checkLogin?
     this.store.dispatch(connect());
   }
 

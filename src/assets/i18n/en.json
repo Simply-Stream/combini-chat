@@ -11,6 +11,9 @@
         "SAVE": "Save"
       }
     },
+    "EMOTES": {
+      "SEARCH": "Search emote"
+    },
     "SEND_MESSAGE": "Chat",
     "SEND_MESSAGE_TEXTAREA": "Send a message",
     "COMBINED": "Combined"

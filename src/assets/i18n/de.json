@@ -11,6 +11,9 @@
         "SAVE": "Speichern"
       }
     },
+    "EMOTES": {
+      "SEARCH": "Emotes suchen"
+    },
     "SEND_MESSAGE": "Chat",
     "SEND_MESSAGE_TEXTAREA": "Eine Nachricht senden",
     "COMBINED": "Kombiniert"

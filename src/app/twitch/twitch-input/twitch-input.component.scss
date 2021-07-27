@@ -1,0 +1,51 @@
+@import "../../../variables";
+
+.twitch-textarea {
+  &:focus {
+    background: #000;
+    border: #a970ff 2px solid;
+    outline: 0;
+  }
+
+  &::placeholder {
+    color: rgba($chat-color-input, .7);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }
+
+  background: $chat-input-background-color;
+  color: $chat-color-input;
+
+  border: $border-chat;
+
+  padding: .5rem 5rem .5rem 3.8rem;
+
+  resize: none;
+}
+
+.twitch-text {
+  &:focus {
+    background: #000;
+    border: #a970ff 2px solid;
+    outline: 0;
+  }
+
+  &::placeholder {
+    color: rgba($chat-color-input, .7);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }
+
+  background: $chat-input-background-color;
+  color: $chat-color-input;
+
+  border: $border-chat;
+
+  padding: .5rem 5rem .5rem 3.8rem;
+}

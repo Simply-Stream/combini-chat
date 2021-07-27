@@ -15,7 +15,6 @@ export class BttvEmoteService {
   private channelEmotes: ChannelEmotes = {};
 
   constructor(private http: HttpClient) {
-    console.log('BttvEmoteService');
   }
 
   // @TODO: Export all the types

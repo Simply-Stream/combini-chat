@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { updateEmoteSets } from "app/twitch/store/actions/twitch-user.actions";
 import { HtmlSanitizerService } from "app/twitch/twitch-chat/services/html-sanitizer.service";
+import { AppConfig } from "environments/environment";
 import { from, Observable } from 'rxjs';
 import { ChatUserstate, Client, RoomState } from 'tmi.js';
 import { Identity } from '../models/identity';
-import * as TwitchChatActions from '../store/actions/twitch-chat.actions';
-import * as fromTwitchChat from '../store/reducers/twitch-chat.reducer';
+import { TwitchChatActions } from '../store/actions';
+import { fromTwitchChat } from '../store/reducers';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +16,7 @@ export class ChatService {
   protected listeners = [];
 
   protected defaultOptions = {
-    options: {debug: false},
+    options: {debug: !AppConfig.production},
   };
 
   protected twitch?: Client;
@@ -43,6 +45,16 @@ export class ChatService {
 
     // @TODO: Throw this either into an EventEmitter or into the store directly
     return from(this.twitch.connect().then((value: [server: string, port: number]) => {
+      if (!AppConfig.production) {
+        // this.twitch.on('raw_message', rawMessage => console.log(rawMessage));
+      }
+
+      // this.twitch.on('disconnected', () => this.twitch.removeAllListeners());
+
+      // We need this event, but it's not been added to the events list, even though it's emitted by TMI.js
+      // @ts-ignore
+      this.twitch.on('globaluserstate', (tags) => this.store.dispatch(updateEmoteSets(tags['emote-sets'])));
+
       this.twitch.on('message', (channel: string, userstate: ChatUserstate, message: string, self: boolean) => {
         // @TODO: Clean message string from HTML
         this.store.dispatch(TwitchChatActions.addMessage({

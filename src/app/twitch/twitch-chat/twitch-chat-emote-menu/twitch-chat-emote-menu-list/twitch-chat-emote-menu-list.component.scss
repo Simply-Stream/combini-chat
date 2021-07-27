@@ -1,0 +1,46 @@
+@import "../../../../../variables";
+
+.emote-menu-list-wrapper {
+  background: $secondary-background-color;
+  position: absolute;
+  inset: auto 0 100% auto;
+
+  max-width: 90vw;
+  min-width: 0;
+  white-space: nowrap;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 4px 8px 0, rgba(0, 0, 0, 0.4) 0 0 4px 0;
+}
+
+.emote-menu-list-picker {
+  width: 32rem;
+}
+
+.emote-menu-list-search-input {
+  .emote-menu-list-close {
+    button {
+      &:hover {
+        background-color: hsla(0, 0%, 100%, .2);
+      }
+
+      border: none;
+      color: $chat-color-input;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: .4rem;
+      background-color: transparent;
+      height: 3rem;
+      width: 3rem;
+    }
+
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 50%);
+  display: flex;
+
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
