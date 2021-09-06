@@ -7,7 +7,7 @@ export const twitchUserFeatureKey = 'twitchUser';
 
 export interface State {
   currentUser: User;
-  'emote-sets': ChannelEmote[]
+  'emote-sets': ChannelEmote[];
 }
 
 export const initialState: State = {

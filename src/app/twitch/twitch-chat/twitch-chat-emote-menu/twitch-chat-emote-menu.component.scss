@@ -5,6 +5,11 @@
     background: $chat-link-hover-background;
   }
 
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }
+
   background: transparent;
   border: none;
   border-radius: 4px;

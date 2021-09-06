@@ -13,11 +13,8 @@ import * as fromTwitchChat from "app/twitch/twitch-chat/store/reducers/twitch-ch
         [placeholder]="'CHAT.SEND_MESSAGE_TEXTAREA' | translate"
         [disabled]="!isLoggedIn()" [rows]="1" [(input)]="textMessage" (keyUpEnter)="onSendMessage()"
       ></app-twitch-input>
-      <!--      <textarea class="chat-input form-control"-->
-      <!--                [(ngModel)]="textMessage" (keyup.enter)="onSendMessage()">-->
-      <!--      </textarea>-->
       <div class="twitch-chat-button-panel">
-        <app-twitch-chat-emote-menu></app-twitch-chat-emote-menu>
+        <app-twitch-chat-emote-menu [disabled]="!isLoggedIn()"></app-twitch-chat-emote-menu>
       </div>
     </div>
 

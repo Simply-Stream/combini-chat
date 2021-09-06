@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from '@angular/router';
 import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import { far } from "@fortawesome/free-regular-svg-icons";
 import * as faSolidIcons from "@fortawesome/free-solid-svg-icons";
+import * as faRegularIcons from "@fortawesome/free-regular-svg-icons";
+import * as faBrandsIcons from "@fortawesome/free-brands-svg-icons";
 import { EffectsModule } from '@ngrx/effects';
 import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
@@ -112,6 +112,6 @@ const metaReducers: Array<MetaReducer<any>> = [localStorageSyncReducer];
 export class TwitchModule {
   constructor(private faLibrary: FaIconLibrary) {
     this.faLibrary.addIcons(faSolidIcons.faSmile, faSolidIcons.faTimes, faSolidIcons.faPlus);
-    this.faLibrary.addIconPacks(far, faSolidIcons.fas, fab);
+    this.faLibrary.addIconPacks(faRegularIcons.far, faSolidIcons.fas, faBrandsIcons.fab);
   }
 }

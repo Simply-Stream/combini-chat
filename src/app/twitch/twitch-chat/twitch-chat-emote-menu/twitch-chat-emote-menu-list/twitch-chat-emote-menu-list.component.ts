@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { select, Store } from "@ngrx/store";
+import { selectEmoteSets } from "app/twitch/store/selectors/twitch-user.selectors";
 
 @Component({
   selector: 'app-twitch-chat-emote-menu-list',
@@ -20,9 +22,21 @@ import { Component } from '@angular/core';
           </div>
         </div>
         <div class="emote-menu-list-body">
-          <div class="emote-menu-list">
-            <div class="emote-menu-list-emotes"></div>
-            <div class="emote-menu-list-channels"></div>
+          <div class="emote-menu-list d-flex">
+            <div class="emote-menu-list-emotes flex-fill">
+              <div class="d-flex" *ngFor="let channels of (emotes$ |async)?.subscriptions |keyvalue"> <!-- content block -->
+                <!-- Add header here (@TODO: Replace ID with username) -->
+                <div>{{ channels.key }}</div>
+
+                <!-- flex blocks for single emotes -->
+                <figure *ngFor="let emote of channels.value">
+                  <img [src]="emote.images.url_1x" [alt]="emote.name" [title]="emote.name">
+                </figure>
+              </div>
+            </div>
+            <div class="emote-menu-list-channels align-self-end">
+              CHANNELS
+            </div>
           </div>
         </div>
       </div>
@@ -31,5 +45,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./twitch-chat-emote-menu-list.component.scss'],
 })
 export class TwitchChatEmoteMenuListComponent {
+  public emotes$ = this.store.pipe(select(selectEmoteSets));
 
+  // @TODO: Move to parent component
+  constructor(public store: Store) {
+  }
 }

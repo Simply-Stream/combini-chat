@@ -16,4 +16,3 @@ export const reducer = createReducer(
   initialState,
   on(TwitchChatEmotesActions.addEmoteset, (state: State, {emotesets}) => ({...state, emotesets})),
 );
-
