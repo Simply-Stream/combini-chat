@@ -1,14 +1,22 @@
 @import "../../../../../variables";
 
 .emote-menu-list-wrapper {
+  .emote-menu-list-emotes-container {
+    border-top: $border-primary;
+  }
+
   background: $secondary-background-color;
   position: absolute;
   inset: auto 0 100% auto;
 
-  max-width: 90vw;
+  //max-width: 90vw;
+  width: 32rem;
+  max-height: 32rem;
   min-width: 0;
   white-space: nowrap;
   box-shadow: rgba(0, 0, 0, 0.4) 0 4px 8px 0, rgba(0, 0, 0, 0.4) 0 0 4px 0;
+
+  overflow: scroll;
 }
 
 .emote-menu-list-picker {
@@ -47,7 +55,9 @@
 
 .emote-menu-list.d-flex {
   .emote-menu-list-emotes {
-
+    .emote-menu-list-emotes-content {
+      flex-wrap: wrap;
+    }
   }
 
   .emote-menu-list-channels {

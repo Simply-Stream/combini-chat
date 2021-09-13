@@ -14,6 +14,7 @@ export class TwitchUserEffects {
   updateEmoteSets$ = createEffect(() => this.actions$
     .pipe(
       ofType(TwitchUserActions.updateEmoteSets),
+      // Parse emotes to make them usable for this application
       mergeMap(({emoteset}) => {
         const emotesets: string[] = emoteset.split(',');
         const forkedObservables: Observable<any>[] = [];
