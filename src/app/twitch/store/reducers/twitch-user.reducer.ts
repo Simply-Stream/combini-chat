@@ -2,17 +2,24 @@ import { createReducer, on } from '@ngrx/store';
 import { ChannelEmote } from "app/twitch/models/channel-emote";
 import { User } from "app/twitch/models/user";
 import * as TwitchActions from "app/twitch/store/actions/twitch-user.actions";
+import * as TwitchUserActions from "app/twitch/store/actions/twitch-user.actions";
 
 export const twitchUserFeatureKey = 'twitchUser';
 
 export interface State {
   currentUser: User;
-  'emote-sets': ChannelEmote[];
+  'emote-sets': {
+    [emoteType: string]: {
+      [userId: string]: ChannelEmote[]
+    },
+  } & { template?: string };
+  subscribedChannels: User[];
 }
 
 export const initialState: State = {
   currentUser: null,
-  "emote-sets": [],
+  'emote-sets': {},
+  subscribedChannels: [],
 };
 
 export const reducer = createReducer(
@@ -21,6 +28,10 @@ export const reducer = createReducer(
   on(TwitchActions.updateEmoteSetsSuccess, (state, {emotesets}) => ({
     ...state,
     'emote-sets': {...state['emote-sets'], ...emotesets},
+  })),
+  on(TwitchUserActions.getUsersSuccess, (state, {users}) => ({
+    ...state,
+    subscribedChannels: users,
   })),
 );
 

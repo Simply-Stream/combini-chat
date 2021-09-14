@@ -41,11 +41,11 @@ export class HelixService {
     );
   }
 
-  public getUsers(channels: string[], accessToken: string): Observable<User[]> {
+  public getUsersByLogin(login: string[], accessToken: string): Observable<User[]> {
     return this.http.get<{ data: User[] }>(
       `${ this.TWITCH_HELIX_ENDPOINT }users`,
       {
-        params: {login: channels},
+        params: {login},
         headers: {Authorization: `Bearer ${ accessToken }`, 'Client-Id': AppConfig.twitch.clientId},
       },
     )
@@ -54,15 +54,25 @@ export class HelixService {
       );
   }
 
-  public getEmotesets(emotesets: string[], accessToken: string): Observable<ChannelEmote[]> {
-    return this.http.get<{ data: ChannelEmote[] }>(
+  public getUsersById(ids: string[], accessToken: string): Observable<User[]> {
+    return this.http.get<{ data: User[] }>(
+      `${ this.TWITCH_HELIX_ENDPOINT }users`,
+      {
+        params: {id: ids},
+        headers: {Authorization: `Bearer ${ accessToken }`, 'Client-Id': AppConfig.twitch.clientId},
+      },
+    )
+      .pipe(
+        map(data => data.data),
+      );
+  }
+
+  public getEmotesets(emotesets: string[], accessToken: string): Observable<{ data: ChannelEmote[], template: string }> {
+    return this.http.get<{ data: ChannelEmote[], template: string }>(
       `${ this.TWITCH_HELIX_ENDPOINT }chat/emotes/set`,
       {
         params: {emote_set_id: emotesets},
         headers: {Authorization: `Bearer ${ accessToken }`, 'Client-Id': AppConfig.twitch.clientId},
-      })
-      .pipe(
-        map(data => data.data),
-      );
+      });
   }
 }

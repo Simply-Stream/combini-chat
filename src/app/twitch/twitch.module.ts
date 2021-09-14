@@ -33,6 +33,7 @@ import { TwitchChatInputComponent } from './twitch-chat/twitch-chat-input/twitch
 import { TwitchChatMessageComponent } from './twitch-chat/twitch-chat-message/twitch-chat-message.component';
 
 import { ChannelSelectPipe } from './twitch-chat/twitch-chat-selector/pipes/channel-select.pipe';
+import { EmoteTemplatePipe } from './twitch-chat/twitch-chat-emote-menu/pipes/emote-template.pipe';
 import { TwitchChatSelectorAddComponent } from './twitch-chat/twitch-chat-selector/twitch-chat-selector-add/twitch-chat-selector-add.component';
 import { TwitchChatSelectorRemoveComponent } from './twitch-chat/twitch-chat-selector/twitch-chat-selector-remove/twitch-chat-selector-remove.component';
 import { TwitchChatSelectorComponent } from './twitch-chat/twitch-chat-selector/twitch-chat-selector.component';
@@ -61,6 +62,7 @@ const pipes = [
   ChannelSelectPipe,
   EmotePipe,
   SafeHtmlPipe,
+  EmoteTemplatePipe,
 ];
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {

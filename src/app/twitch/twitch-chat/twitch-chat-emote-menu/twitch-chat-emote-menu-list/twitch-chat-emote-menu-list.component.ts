@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { select, Store } from "@ngrx/store";
-import { selectEmoteSets } from "app/twitch/store/selectors/twitch-user.selectors";
+import {
+  selectEmoteSets,
+  selectEmoteTemplate,
+  selectSubscribedChannels,
+} from "app/twitch/store/selectors/twitch-user.selectors";
 
 @Component({
   selector: 'app-twitch-chat-emote-menu-list',
@@ -23,15 +27,34 @@ import { selectEmoteSets } from "app/twitch/store/selectors/twitch-user.selector
         </div>
         <div class="emote-menu-list-body">
           <div class="emote-menu-list d-flex">
-            <div class="emote-menu-list-emotes flex-fill">
-              <div class="emote-menu-list-emotes-container" *ngFor="let channels of (emotes$ |async)?.subscriptions |keyvalue"> <!-- content block -->
-                <div class="emote-menu-list-emotes-header">{{ channels.key }}</div>
+            <div class="emote-menu-list-emotes">
+              <div class="emote-menu-list-emotes-container d-flex flex-column"
+                   *ngFor="let channel of subscribedChannels$ |async">
+                <div class="p-3">
+                  <!-- content block -->
+                  <div class="emote-menu-list-emotes-header d-flex">
+                    <div class="d-flex align-items-center p-2">
+                      <figure class="m-0" aria-label="{{ channel.display_name }}">
+                        <img width="28" class="rounded-circle" [src]="channel.profile_image_url"
+                             [alt]="channel.display_name"/>
+                      </figure>
 
-                <!-- flex blocks for single emotes -->
-                <div class="d-flex emote-menu-list-emotes-content">
-                  <figure *ngFor="let emote of channels.value">
-                    <img [src]="emote.images.url_1x" [alt]="emote.name" [title]="emote.name">
-                  </figure>
+                      <div class="px-1"></div>
+
+                      <p class="align-middle m-0">
+                        {{ channel.display_name }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- flex blocks for single emotes -->
+                  <div class="d-flex emote-menu-list-emotes-content">
+                    <figure class="px-1" *ngFor="let emote of (emotes$ |async)?.subscriptions[channel.id]">
+                      <img class="mx-1"
+                           [src]="emote |emoteTemplate:(emoteTemplate$ |async)"
+                           [alt]="emote.name" [title]="emote.name">
+                    </figure>
+                  </div>
                 </div>
               </div>
             </div>
@@ -47,6 +70,8 @@ import { selectEmoteSets } from "app/twitch/store/selectors/twitch-user.selector
 })
 export class TwitchChatEmoteMenuListComponent {
   public emotes$ = this.store.pipe(select(selectEmoteSets));
+  public subscribedChannels$ = this.store.pipe(select(selectSubscribedChannels));
+  public emoteTemplate$ = this.store.pipe(select(selectEmoteTemplate));
 
   // @TODO: Move to parent component
   constructor(public store: Store) {

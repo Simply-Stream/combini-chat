@@ -14,3 +14,13 @@ export const selectEmoteSets = createSelector(
   selectTwitchUserState,
   (state: fromTwitchUser.State) => state["emote-sets"],
 );
+
+export const selectSubscribedChannels = createSelector(
+  selectTwitchUserState,
+  (state: fromTwitchUser.State) => state.subscribedChannels,
+);
+
+export const selectEmoteTemplate = createSelector(
+  selectTwitchUserState,
+  (state: fromTwitchUser.State) => state["emote-sets"].template,
+);

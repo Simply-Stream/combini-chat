@@ -5,6 +5,20 @@
     border-top: $border-primary;
   }
 
+  .emote-menu-list-emotes-header {
+    background: $secondary-background-color;
+    position: sticky;
+    top: -2px;
+    z-index: 20;
+
+    font-weight: 600;
+  }
+
+  .emote-menu-list-emotes {
+    height: 26rem;
+    overflow: scroll;
+  }
+
   background: $secondary-background-color;
   position: absolute;
   inset: auto 0 100% auto;
@@ -16,7 +30,7 @@
   white-space: nowrap;
   box-shadow: rgba(0, 0, 0, 0.4) 0 4px 8px 0, rgba(0, 0, 0, 0.4) 0 0 4px 0;
 
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .emote-menu-list-picker {

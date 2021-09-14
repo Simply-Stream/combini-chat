@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { ChannelEmote } from "app/twitch/models/channel-emote";
+import { User } from "app/twitch/models/user";
 
 export const updateCurrentUser = createAction(
   '[Twitch User] Update Current User',
@@ -20,4 +21,9 @@ export const updateEmoteSetsSuccess = createAction(
       }
     }
   }>(),
+);
+
+export const getUsersSuccess = createAction(
+  '[Twitch User] Get Users Success',
+  props<{ users: User[] }>(),
 );

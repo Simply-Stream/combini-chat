@@ -17,7 +17,7 @@ export class TwitchUserEffects {
       // Parse emotes to make them usable for this application
       mergeMap(({emoteset}) => {
         const emotesets: string[] = emoteset.split(',');
-        const forkedObservables: Observable<any>[] = [];
+        const forkedObservables: Observable<{ data: ChannelEmote[], template: string }>[] = [];
 
         for (let i = 0; i < Math.floor(emotesets.length / 25); i++) {
           forkedObservables.push(this.helix.getEmotesets(emotesets.slice(i * 25, i * 25 + 25), this.auth.getAccessToken()));
@@ -28,11 +28,11 @@ export class TwitchUserEffects {
             const sortedEmotesets: {
               [emoteType: string]: {
                 [userId: string]: ChannelEmote[]
-              }
-            } = {};
+              },
+            } & { template?: string } = {};
 
             forkedEmotesets.forEach(emotesets => {
-              emotesets.forEach(((emote: ChannelEmote) => {
+              emotesets.data.forEach(((emote: ChannelEmote) => {
                 if (!sortedEmotesets[emote.emote_type]) {
                   sortedEmotesets[emote.emote_type] = {
                     [emote.owner_id]: [],
@@ -45,6 +45,8 @@ export class TwitchUserEffects {
               }));
             });
 
+            sortedEmotesets.template = forkedEmotesets.pop().template;
+
             return sortedEmotesets;
           }),
           map((emotesets) => updateEmoteSetsSuccess({emotesets})),
@@ -52,6 +54,16 @@ export class TwitchUserEffects {
         );
       })),
   );
+
+  getSubscribedUserData$ = createEffect(() => this.actions$
+    .pipe(
+      ofType(TwitchUserActions.updateEmoteSetsSuccess),
+      mergeMap(({emotesets}) => this.helix.getUsersById(Object.keys(emotesets.subscriptions), this.auth.getAccessToken())
+        .pipe(
+          map(users => TwitchUserActions.getUsersSuccess({users})),
+          catchError(() => EMPTY),
+        )),
+    ));
 
   constructor(private actions$: Actions, private helix: HelixService, private auth: TwitchAuthenticationService) {
   }
