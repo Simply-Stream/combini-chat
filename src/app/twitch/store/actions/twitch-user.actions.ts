@@ -16,8 +16,11 @@ export const updateEmoteSetsSuccess = createAction(
   '[Twitch User] Update Emote Sets Success',
   props<{
     emotesets: {
-      [emoteType: string]: {
-        [userId: string]: ChannelEmote[]
+      template: string,
+      types: {
+        [emoteType: string]: {
+          [userId: string]: ChannelEmote[]
+        },
       }
     }
   }>(),

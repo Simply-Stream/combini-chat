@@ -19,9 +19,12 @@ import { Message } from 'app/twitch/twitch-chat/twitch-chat-message/models/messa
 
       <div class="d-flex">
         <div class="align-self-stretch">
-        <span class="chat-message-badges" *ngFor="let badge of parsedBadges">
-          <app-twitch-chat-badge [badge]="badge"></app-twitch-chat-badge>
-        </span>
+          <span class="chat-message-timestamp">
+            {{ message.messageSent |date:'HH:mm' }}
+          </span>
+          <span class="chat-message-badges" *ngFor="let badge of parsedBadges">
+            <app-twitch-chat-badge [badge]="badge"></app-twitch-chat-badge>
+          </span>
           <span class="chat-message-user fw-bold"
                 [style]="{color: message.userstate?.color}">{{ message.userstate['display-name'] }}: </span>
           <span class="chat-message"

@@ -10,6 +10,10 @@
     background-color: $chat-color-alternating;
   }
 
+  .chat-message-timestamp {
+    color: color.adjust($chat-color-primary, $lightness: 50%);
+  }
+
   .chat-message-channel {
     color: color.adjust($chat-color-primary, $lightness: 50%);
   }

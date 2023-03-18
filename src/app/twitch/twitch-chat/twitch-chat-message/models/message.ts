@@ -7,5 +7,6 @@ export interface Message {
   channel: string;
   userstate: UserState;
   message: string;
-  background?: string
+  background?: string;
+  messageSent?: Date;
 }

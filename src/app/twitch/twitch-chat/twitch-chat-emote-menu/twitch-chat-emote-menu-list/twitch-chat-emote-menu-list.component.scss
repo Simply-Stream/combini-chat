@@ -16,25 +16,21 @@
 
   .emote-menu-list-emotes {
     height: 26rem;
-    overflow: scroll;
+    overflow-y: scroll;
   }
 
   background: $secondary-background-color;
   position: absolute;
-  inset: auto 0 100% auto;
+  inset: auto 0 150% auto;
 
   //max-width: 90vw;
-  width: 32rem;
+  width: 30rem;
   max-height: 32rem;
   min-width: 0;
   white-space: nowrap;
   box-shadow: rgba(0, 0, 0, 0.4) 0 4px 8px 0, rgba(0, 0, 0, 0.4) 0 0 4px 0;
 
   overflow: hidden;
-}
-
-.emote-menu-list-picker {
-  width: 32rem;
 }
 
 .emote-menu-list-search-input {
@@ -74,7 +70,13 @@
     }
   }
 
-  .emote-menu-list-channels {
+  .emote-menu-list-channels-container {
+    .emote-menu-list-channels {
+      height: 100%;
+      overflow-y: scroll;
+    }
 
+    background: $alternative-background-color-2;
+    height: 26rem;
   }
 }

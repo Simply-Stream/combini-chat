@@ -9,16 +9,19 @@ export const twitchUserFeatureKey = 'twitchUser';
 export interface State {
   currentUser: User;
   'emote-sets': {
-    [emoteType: string]: {
-      [userId: string]: ChannelEmote[]
-    },
-  } & { template?: string };
+    template: string,
+    types: {
+      [emoteType: string]: {
+        [userId: string]: ChannelEmote[]
+      },
+    }
+  };
   subscribedChannels: User[];
 }
 
 export const initialState: State = {
   currentUser: null,
-  'emote-sets': {},
+  'emote-sets': {template: '', types: {}},
   subscribedChannels: [],
 };
 

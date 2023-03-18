@@ -9,7 +9,7 @@ export const AppConfig = {
         channel: 'https://badges.twitch.tv/v1/badges/channels/CHANNELID/display',
       },
     },
-    clientId: 'tmctv857ynx6i3w7yb3c6ec7i6ow5y',
+    clientId: '6rp5jn448eif4bfvn6m5s76oqwhp0h',
     loginUrl: 'https://id.twitch.tv/oauth2/authorize',
     tokenUrl: 'https://id.twitch.tv/oauth2/token',
   },

@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ChannelEmote } from "app/twitch/models/channel-emote";
+import { GlobalEmote } from "app/twitch/models/global-emote";
 
 @Pipe({
   name: 'emoteTemplate',
 })
 export class EmoteTemplatePipe implements PipeTransform {
-  transform(emote: ChannelEmote, template: string): string {
+  transform(emote: GlobalEmote, template: string): string {
     return template
       .replace('{{id}}', emote.id)
       .replace('{{format}}', 'default')

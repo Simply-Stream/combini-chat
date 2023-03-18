@@ -26,22 +26,25 @@ export class TwitchUserEffects {
         return forkJoin(forkedObservables).pipe(
           map(forkedEmotesets => {
             const sortedEmotesets: {
-              [emoteType: string]: {
-                [userId: string]: ChannelEmote[]
-              },
-            } & { template?: string } = {};
+              template: string,
+              types: {
+                [emoteType: string]: {
+                  [userId: string]: ChannelEmote[]
+                },
+              }
+            } = {template: '', types: {}};
 
             forkedEmotesets.forEach(emotesets => {
               emotesets.data.forEach(((emote: ChannelEmote) => {
-                if (!sortedEmotesets[emote.emote_type]) {
-                  sortedEmotesets[emote.emote_type] = {
+                if (!sortedEmotesets.types[emote.emote_type]) {
+                  sortedEmotesets.types[emote.emote_type] = {
                     [emote.owner_id]: [],
                   };
-                } else if (!sortedEmotesets[emote.emote_type][emote.owner_id]) {
-                  sortedEmotesets[emote.emote_type][emote.owner_id] = [];
+                } else if (!sortedEmotesets.types[emote.emote_type][emote.owner_id]) {
+                  sortedEmotesets.types[emote.emote_type][emote.owner_id] = [];
                 }
 
-                sortedEmotesets[emote.emote_type][emote.owner_id].push(emote);
+                sortedEmotesets.types[emote.emote_type][emote.owner_id].push(emote);
               }));
             });
 
@@ -58,7 +61,7 @@ export class TwitchUserEffects {
   getSubscribedUserData$ = createEffect(() => this.actions$
     .pipe(
       ofType(TwitchUserActions.updateEmoteSetsSuccess),
-      mergeMap(({emotesets}) => this.helix.getUsersById(Object.keys(emotesets.subscriptions), this.auth.getAccessToken())
+      mergeMap(({emotesets}) => this.helix.getUsersById(Object.keys(emotesets.types.subscriptions), this.auth.getAccessToken())
         .pipe(
           map(users => TwitchUserActions.getUsersSuccess({users})),
           catchError(() => EMPTY),

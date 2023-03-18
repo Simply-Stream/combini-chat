@@ -5,7 +5,4 @@ export interface ChannelEmote extends GlobalEmote {
   emote_type: string;
   emote_set_id: string;
   owner_id: string;
-  format: string[];
-  scale: string[];
-  theme_mode: string[];
 }

@@ -57,8 +57,8 @@ export class ChatService {
       }
 
       // this.twitch.on('disconnected', () => this.twitch.removeAllListeners());
-
       this.twitch.on('message', (channel: string, userstate: ChatUserstate, message: string, self: boolean) => {
+        // console.log(message, userstate);
         // @TODO: Clean message string from HTML
         this.store.dispatch(TwitchChatActions.addMessage({
           channel,
@@ -66,6 +66,7 @@ export class ChatService {
           message: this.htmlSanitizer.sanitize(message),
           // @TODO: Remove the background-alternation from this property
           background: ((this.alternatingToggle = !this.alternatingToggle) ? 'alternate' : null),
+          messageSent: new Date(parseInt(userstate['tmi-sent-ts']) ?? null)
         }));
 
         if (callback) {
